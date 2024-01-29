@@ -1,5 +1,5 @@
 {
-    "name": "Game.System",
+    "name": "Game.Aspect",
     "rootNamespace": "Game.Ecs",
     "references": [],
     "includePlatforms": [],
