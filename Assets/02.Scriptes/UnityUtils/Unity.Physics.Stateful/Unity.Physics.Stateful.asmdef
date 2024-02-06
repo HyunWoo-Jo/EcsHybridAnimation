@@ -1,11 +1,13 @@
 {
-    "name": "Game.AuthoringsAndMono",
-    "rootNamespace": "Game.Ecs",
+    "name": "Unity.Physics.Stateful",
+    "rootNamespace": "Unity.Physics.Stateful",
     "references": [
-        "GUID:e0cd26848372d4e5c891c569017e11f1",
-        "GUID:734d92eba21c94caba915361bd5ac177",
-        "GUID:8819f35a0fc84499b990e90a4ca1911f",
-        "GUID:4eba845d21ab1644cb6b9011ac18d033"
+        "Unity.Physics",
+        "Unity.Burst",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Entities",
+        "Unity.Entities.Hybrid"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
