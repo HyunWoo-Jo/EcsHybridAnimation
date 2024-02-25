@@ -17,6 +17,7 @@ namespace Game.Ecs
         public bool isStop;
         public int curretWaypoint;
         public float moveSpeed;
+        public float distanceFromCenter2Floor;
         public float timer;
     }
 

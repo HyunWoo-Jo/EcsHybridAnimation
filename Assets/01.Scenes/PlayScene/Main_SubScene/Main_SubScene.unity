@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 7995682}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 78.21, y: 4.95, z: -1.23}
+  m_LocalPosition: {x: 76.13, y: 4.5, z: -15.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -166,7 +166,6 @@ GameObject:
   - component: {fileID: 48467264}
   - component: {fileID: 48467263}
   - component: {fileID: 48467262}
-  - component: {fileID: 48467260}
   - component: {fileID: 48467266}
   m_Layer: 0
   m_Name: Player
@@ -175,33 +174,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!54 &48467260
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 48467259}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 122
-  m_CollisionDetection: 0
 --- !u!136 &48467262
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -303,7 +275,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetTransform: {fileID: 7995683}
-  _moveSpeed: 2
+  _moveSpeed: 5
+  _distanceFromCenter2Floor: 1
 --- !u!1 &472156445
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,6 +770,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1552061294}
   - component: {fileID: 1552061295}
+  - component: {fileID: 1552061296}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -855,6 +829,19 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 967ade29a94283343b8c23f805816482, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &1552061296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552061293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0828147800256d4c8ff630bcd40ab77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _navMeshSurface: {fileID: 1552061295}
 --- !u!1 &2002671440
 GameObject:
   m_ObjectHideFlags: 0

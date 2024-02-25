@@ -58,7 +58,7 @@ namespace Game.Ecs
             _waypointBuffer.Add(new WaypointBuffer { waypoint = position });
         }
         public float3 GetCurrentWaypointPosition() {
-            return _waypointBuffer[_navAgentProperties.ValueRO.curretWaypoint].waypoint;
+            return _waypointBuffer[_navAgentProperties.ValueRO.curretWaypoint].waypoint + new float3(0, _navAgentProperties.ValueRO.distanceFromCenter2Floor, 0);
         }
         public void NextWaypoint() {
             if(_navAgentProperties.ValueRO.curretWaypoint + 1 < _waypointBuffer.Length) {

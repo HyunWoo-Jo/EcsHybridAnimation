@@ -71,9 +71,7 @@ namespace Game.Ecs {
                 NavMeshLocation endLocation = navQuery.MapLocation(endPosition, extents, 0);
                 PathQueryStatus status;
                 PathQueryStatus returningStatus;
-                Debug.Log(navQuery.IsValid(startLocation) + " " + navQuery.IsValid(endLocation));
                 if (navQuery.IsValid(startLocation) && navQuery.IsValid(endLocation)) {
-                    Debug.Log("Chk");
                     status = navQuery.BeginFindPath(startLocation, endLocation);
                     if(status == PathQueryStatus.InProgress) {
                         status = navQuery.UpdateFindPath(maxPathSize, out int iterationsPerformed);
