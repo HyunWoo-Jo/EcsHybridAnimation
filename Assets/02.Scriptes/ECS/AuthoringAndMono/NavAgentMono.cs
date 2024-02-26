@@ -4,7 +4,8 @@ using Unity.Entities;
 using UnityEngine;
 using Unity.Transforms;
 using Unity.Mathematics;
-namespace Game.Ecs
+using Game.Ecs.ComponentAndTag;
+namespace Game.Ecs.AuthoringsAndMono
 {
     public class NavAgentMono : MonoBehaviour
     {

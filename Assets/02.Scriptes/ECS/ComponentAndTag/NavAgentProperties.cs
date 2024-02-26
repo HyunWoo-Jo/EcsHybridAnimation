@@ -4,7 +4,7 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-namespace Game.Ecs
+namespace Game.Ecs.ComponentAndTag 
 {
     /// <summary>
     /// NavAgent ÄÄÆ÷³ÍÆ®

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Ecs
+namespace Game.Ecs.AuthoringsAndMono
 {
     public class PlayerMono : MonoBehaviour
     {

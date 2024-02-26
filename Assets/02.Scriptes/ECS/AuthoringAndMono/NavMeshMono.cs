@@ -5,7 +5,7 @@ using Unity.Entities;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
 
-namespace Game.Ecs
+namespace Game.Ecs.AuthoringsAndMono
 {
     [RequireComponent(typeof(NavMeshSurface))]
     public class NavMeshMono : MonoBehaviour

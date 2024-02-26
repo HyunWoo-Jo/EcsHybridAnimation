@@ -7,8 +7,9 @@ using UnityEngine.Experimental.AI;
 using Unity.Collections;
 using Unity.Mathematics;
 using Unity.Transforms;
+using Game.Ecs.Aspect;
 
-namespace Game.Ecs {
+namespace Game.Ecs.System {
     /// <summary>
     /// Nav Agent 컨트롤 시스템
     /// </summary>

@@ -4,7 +4,8 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-namespace Game.Ecs
+using Game.Ecs.ComponentAndTag;
+namespace Game.Ecs.Aspect
 {
     public readonly partial struct NavAgentAspect : IAspect
     {

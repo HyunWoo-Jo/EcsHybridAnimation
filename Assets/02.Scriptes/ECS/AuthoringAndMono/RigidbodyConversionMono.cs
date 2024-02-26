@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using Unity.Physics;
-namespace Game.Ecs
+namespace Game.Ecs.AuthoringsAndMono
 {
     [DisallowMultipleComponent,  RequireComponent(typeof(Rigidbody))]
     public class RigidbodyConversionMono : MonoBehaviour
