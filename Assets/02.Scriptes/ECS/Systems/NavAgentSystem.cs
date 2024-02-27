@@ -134,11 +134,16 @@ namespace Game.Ecs.System {
             }
             [BurstCompile]
             private void Move(NavAgentAspect aspect) {
-                if (math.distance(aspect.Position, aspect.GetCurrentWaypointPosition()) < 0.3f) {
+                float3 position = aspect.Position;
+                float3 currentWayPosition = aspect.GetCurrentWaypointPosition();
+                position.y = 0f;
+                currentWayPosition.y = 0;
+                if (math.distance(position, currentWayPosition) < 0.3f) {
                     aspect.NextWaypoint();
                 }
+                float3 direction = currentWayPosition - position;
+                if (direction.x == 0f && direction.z == 0f) return;
                 // 회전
-                float3 direction = aspect.GetCurrentWaypointPosition() - aspect.Position;
                 float angle = math.degrees(math.atan2(direction.z, direction.x));
                 aspect.Rotation = math.slerp(aspect.Rotation, quaternion.Euler(new float3(0, angle, 0)), deltaTime);
                 // 이동

@@ -59,11 +59,13 @@ namespace Game.Ecs.Aspect
             _waypointBuffer.Add(new WaypointBuffer { waypoint = position });
         }
         public float3 GetCurrentWaypointPosition() {
-            return _waypointBuffer[_navAgentProperties.ValueRO.curretWaypoint].waypoint + new float3(0, _navAgentProperties.ValueRO.distanceFromCenter2Floor, 0);
+            return _waypointBuffer[_navAgentProperties.ValueRO.curretWaypoint].waypoint;
         }
         public void NextWaypoint() {
             if(_navAgentProperties.ValueRO.curretWaypoint + 1 < _waypointBuffer.Length) {
                 _navAgentProperties.ValueRW.curretWaypoint++;
+            } else {
+                _navAgentProperties.ValueRW.isStop = true;
             }
         }
     }

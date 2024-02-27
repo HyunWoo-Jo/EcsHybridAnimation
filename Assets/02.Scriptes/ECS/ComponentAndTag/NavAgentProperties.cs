@@ -17,7 +17,7 @@ namespace Game.Ecs.ComponentAndTag
         public bool isStop;
         public int curretWaypoint;
         public float moveSpeed;
-        public float distanceFromCenter2Floor;
+        public float pivotHight;
         public float timer;
     }
 
