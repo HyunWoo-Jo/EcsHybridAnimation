@@ -65,7 +65,7 @@ namespace Game.Ecs.Aspect
             if(_navAgentProperties.ValueRO.curretWaypoint + 1 < _waypointBuffer.Length) {
                 _navAgentProperties.ValueRW.curretWaypoint++;
             } else {
-                _navAgentProperties.ValueRW.isStop = true;
+                if(IsFinded()) _navAgentProperties.ValueRW.isStop = true;
             }
         }
     }

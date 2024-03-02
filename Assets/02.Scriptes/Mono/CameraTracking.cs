@@ -8,6 +8,7 @@ namespace Game.Mono
 {
     public class CameraTracking : MonoBehaviour
     {
+        private float followSpeed = 3f;
         [SerializeField] private float3 _addPosition;
         // Start is called before the first frame update
         IEnumerator Start()
@@ -24,7 +25,7 @@ namespace Game.Mono
 
         public void UpdatePosition(float3 pos) {
            
-            transform.position = pos + _addPosition;
+            transform.position = math.lerp(transform.position, pos + _addPosition, Time.deltaTime * followSpeed);
         }
     }
 }

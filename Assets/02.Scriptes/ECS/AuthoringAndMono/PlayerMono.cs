@@ -1,21 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Unity.Entities;
+using Game.Ecs.ComponentAndTag;
 namespace Game.Ecs.AuthoringsAndMono
 {
     public class PlayerMono : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
-        
+        private class PlayerBaker : Baker<PlayerMono> {
+            public override void Bake(PlayerMono authoring) {
+                Entity entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
+                AddComponent<PlayerTag>(entity);
+            }
         }
     }
 }

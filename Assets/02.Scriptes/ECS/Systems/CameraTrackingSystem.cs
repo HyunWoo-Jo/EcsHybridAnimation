@@ -10,6 +10,7 @@ using Game.Ecs.Aspect;
 namespace Game.Ecs.System
 {
     public partial class CameraTrackingSystem : SystemBase {
+        // Mono -> CameraTracking.cs
         private Action<float3> _targetPositionUpdate_listener;
 
         public void SetTargetPositionListener(Action<float3> targetPosition) {
