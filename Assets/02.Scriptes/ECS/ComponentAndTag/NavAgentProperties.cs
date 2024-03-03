@@ -17,8 +17,9 @@ namespace Game.Ecs.ComponentAndTag
         public bool isStop;
         public int curretWaypoint;
         public float moveSpeed;
+        public float rotationSpeed;
         public float pivotHight;
-        public float timer;
+        public float traceRange;
     }
 
 

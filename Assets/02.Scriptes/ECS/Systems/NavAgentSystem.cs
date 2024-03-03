@@ -63,15 +63,11 @@ namespace Game.Ecs.System {
             PathQueryStatus status;
             PathQueryStatus returningStatus;
             if (navQuery.IsValid(startLocation) && navQuery.IsValid(endLocation)) {
-                Debug.Log("Find");
                 status = navQuery.BeginFindPath(startLocation, endLocation);
-                Debug.Log(status.ToString());
                 if (status == PathQueryStatus.InProgress) {
-                    Debug.Log("prog");
                     status = navQuery.UpdateFindPath(maxPathSize, out int iterationsPerformed);  
                 }
                 if (status == PathQueryStatus.Success) {
-                    Debug.Log("Sucs");
                     status = navQuery.EndFindPath(out int pathSize);
 
                     NativeArray<NavMeshLocation> result = new NativeArray<NavMeshLocation>(pathSize + 1, Allocator.Temp);
@@ -110,21 +106,22 @@ namespace Game.Ecs.System {
                 }
             }
         }
-        private void Move(NavAgentAspect aspect, float deltaTime) {
-            float3 position = aspect.Position;
-            float3 currentWayPosition = aspect.GetCurrentWaypointPosition();
+        private void Move(NavAgentAspect navAspect, float deltaTime) {
+            float3 position = navAspect.Position;
+            float3 currentWayPosition = navAspect.GetCurrentWaypointPosition();
             position.y = 0f;
             currentWayPosition.y = 0.02f;
-            if (math.distance(position, currentWayPosition) < 0.3f) {
-                aspect.NextWaypoint();
+            if (math.distance(position, currentWayPosition) < navAspect.GetTraceRange()) {
+                navAspect.NextWaypoint();
             }
             float3 direction = currentWayPosition - position;
             if (direction.x == 0f && direction.z == 0f) return;
             // 회전
+            quaternion targetRotation = quaternion.LookRotation(direction, new float3(0, 1, 0));
             float angle = math.degrees(math.atan2(direction.z, direction.x));
-            aspect.Rotation = math.slerp(aspect.Rotation, quaternion.Euler(new float3(0, angle, 0)), deltaTime);
+            navAspect.Rotation = math.slerp(navAspect.Rotation, targetRotation, navAspect.GetRotationSpeed() *  deltaTime);
             // 이동
-            aspect.Position += math.normalize(direction) * aspect.GetMoveSpeed() * deltaTime;
+            navAspect.Position += math.normalize(direction) * navAspect.GetMoveSpeed() * deltaTime;
         }
     }
 }
