@@ -17,13 +17,11 @@ namespace Game.Ecs.System {
     public partial struct NavAgentSystem : ISystem {
 
         private NavMeshQuery navQuery;
-        private float findUpdateTime;
         float3 extents;
         int maxPathSize;
         [BurstCompile]
         private void OnCreate(ref SystemState state) {
             CreateNavMesh();
-            findUpdateTime = 0.02f;
             extents = new float3(1, 1, 1);
             maxPathSize = 100;
         }
@@ -49,10 +47,6 @@ namespace Game.Ecs.System {
 
         [BurstCompile]
         private void FindPath(ref SystemState state, NavAgentAspect navAspect, float deltaTime) {
-            // 업데이트 간격     
-            //navAspect.Timer += deltaTime;
-            //if (navAspect.Timer < findUpdateTime) return;
-            //navAspect.Timer = 0f;
             if (navAspect.IsFinded()) return;
             // 검색
             float3 startPosition = navAspect.Position;

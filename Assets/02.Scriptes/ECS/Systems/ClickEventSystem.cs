@@ -43,10 +43,12 @@ namespace Game.Ecs.System
 #endif
             if (RayCast(rayStart, rayEnd, out var raycastHit)) {
                 foreach (var clickProperties in SystemAPI.Query<ClickEventProperties>()) {
-                    SystemAPI.GetComponentRW<LocalTransform>(clickProperties.clickMovePointEntity).ValueRW.Position = raycastHit.Position;
-                    var navAgentPropertiesRW = SystemAPI.GetComponentRW<NavAgentProperties>(clickProperties.playerEntity);
-                    navAgentPropertiesRW.ValueRW.isStop = false;
-                    navAgentPropertiesRW.ValueRW.isPathFinded = false;
+                    foreach (var (tag, playerEntity) in SystemAPI.Query<PlayerTag>().WithEntityAccess()) {
+                        SystemAPI.GetComponentRW<LocalTransform>(clickProperties.clickMovePointEntity).ValueRW.Position = raycastHit.Position;
+                        var navAgentPropertiesRW = SystemAPI.GetComponentRW<NavAgentProperties>(playerEntity);
+                        navAgentPropertiesRW.ValueRW.isStop = false;
+                        navAgentPropertiesRW.ValueRW.isPathFinded = false;
+                    }
                 }
             }
 

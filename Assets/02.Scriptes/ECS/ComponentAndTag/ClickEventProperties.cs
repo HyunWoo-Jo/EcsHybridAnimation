@@ -8,6 +8,5 @@ namespace Game.Ecs.ComponentAndTag
 {
     public partial struct ClickEventProperties : IComponentData    {
         public Entity clickMovePointEntity;
-        public Entity playerEntity;
     }
 }

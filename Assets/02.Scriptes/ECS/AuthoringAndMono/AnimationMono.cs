@@ -7,13 +7,11 @@ namespace Game.Ecs.AuthoringsAndMono
 {
     public class AnimationMono : MonoBehaviour
     {
-        private Animator _animator => GetComponent<Animator>();
+        public GameObject obj;
         private class AnimationBaker : Baker<AnimationMono> {
             public override void Bake(AnimationMono authoring) {
-                Entity entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
-                AddComponentObject(entity, new AnimationReference { 
-                    animator = authoring._animator 
-                });
+                var entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
+                AddComponentObject(entity, new AnimGameObjectReference { prefab = authoring.obj });
             }
         }
     }

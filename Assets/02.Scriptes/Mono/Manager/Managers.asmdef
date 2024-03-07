@@ -1,11 +1,9 @@
 {
-    "name": "Mono",
+    "name": "Managers",
     "rootNamespace": "Game.Mono",
     "references": [
-        "GUID:e0cd26848372d4e5c891c569017e11f1",
-        "GUID:d8b63aba1907145bea998dd612889d6b",
-        "GUID:734d92eba21c94caba915361bd5ac177",
-        "GUID:1834f09d99bec204ab212e67c528369d"
+        "GUID:0b6c1d5c3aeae3048980d79678507df6",
+        "GUID:cf71066ebb7d3cf4d825844dafb47f41"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

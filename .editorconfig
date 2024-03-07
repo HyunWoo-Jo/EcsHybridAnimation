@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS1030: #warning 지시문
+dotnet_diagnostic.CS1030.severity = suggestion
