@@ -48,6 +48,7 @@ namespace Game.Ecs.System {
         [BurstCompile]
         private void FindPath(ref SystemState state, NavAgentAspect navAspect, float deltaTime) {
             if (navAspect.IsFinded()) return;
+           
             // °Ë»ö
             float3 startPosition = navAspect.Position;
             float3 endPosition = SystemAPI.GetComponent<LocalTransform>(navAspect.GetTargetEntity()).Position;

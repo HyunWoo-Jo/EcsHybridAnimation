@@ -9,13 +9,14 @@ namespace Game.Tools {
         private List<EditorTab> _tabList = new List<EditorTab>();
         private int _tabIndex = 0;
 
+        /*
         [MenuItem("Tools/Game Tools",false,0)]
         public static void Init() {
             // 윈도우 창 출력
             var window = GetWindow(typeof(ToolsMainMenu));
             window.titleContent = new GUIContent("Game Tools");
         }
-
+        */
         private void OnEnable() {
             _tabList.Add(new AnimationClipConverterTab(this));
         }

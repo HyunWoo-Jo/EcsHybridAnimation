@@ -24,6 +24,7 @@ namespace Game.Ecs.Aspect
         public bool IsStop() {
             return _navAgentProperties.ValueRO.isStop;
         }
+
         public bool IsFinded() {
             return _navAgentProperties.ValueRO.isPathFinded;
         }

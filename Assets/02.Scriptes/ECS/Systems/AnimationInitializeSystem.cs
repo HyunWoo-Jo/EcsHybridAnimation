@@ -23,11 +23,15 @@ namespace Game.Ecs.System
             var ecb = new EntityCommandBuffer(Unity.Collections.Allocator.Temp, PlaybackPolicy.SinglePlayback);
 
             foreach (var (animRef, entity) in SystemAPI.Query<AnimGameObjectReference>().WithNone<AnimationReference>().WithEntityAccess()) {
-
-                HybridObjectInstantManager.Instance.InstantiateObject(animRef.prefab);
-               
-                ecb.AddComponent(entity, new AnimationReference { animator = animRef.prefab.GetComponent<Animator>() });
+                // 생성
+                GameObject obj = HybridObjectManager.Instance.InstantiateObject(animRef.prefab);          
+                ecb.AddComponent(entity, new AnimationReference {
+                    animator = obj.GetComponent<Animator>(),
+                    transform = obj.GetComponent<Transform>()
+                });
+                // 삭제
                 ecb.RemoveComponent<AnimGameObjectReference>(entity);
+                ecb.DestroyEntity(animRef.animatorEntity);
             }
 
             ecb.Playback(state.EntityManager);
