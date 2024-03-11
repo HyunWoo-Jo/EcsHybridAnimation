@@ -9,7 +9,8 @@ namespace Game.Tools {
         private List<EditorTab> _tabList = new List<EditorTab>();
         private int _tabIndex = 0;
 
-        /*
+
+        /* Legacy Code 24/3/12 
         [MenuItem("Tools/Game Tools",false,0)]
         public static void Init() {
             // 윈도우 창 출력

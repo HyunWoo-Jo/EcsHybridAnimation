@@ -5,6 +5,9 @@ using UnityEditor;
 using System.IO;
 namespace Game.Tools
 {
+    /// <summary>
+    /// Legacy Code 24/3/12 
+    /// </summary>
     public class AnimationClipConverterTab : EditorTab {
         public AnimationClipConverterTab(ToolsMainMenu oner) : base(oner) {
         }

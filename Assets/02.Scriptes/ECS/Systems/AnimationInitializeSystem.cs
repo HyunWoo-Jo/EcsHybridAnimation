@@ -6,6 +6,7 @@ using Game.Ecs.ComponentAndTag;
 using Unity.Burst;
 using Unity.Entities.Conversion;
 using UnityEngine.SceneManagement;
+using Unity.Transforms;
 using Game.Mono;
 
 namespace Game.Ecs.System
@@ -31,11 +32,24 @@ namespace Game.Ecs.System
                 });
                 // 삭제
                 ecb.RemoveComponent<AnimGameObjectReference>(entity);
-                ecb.DestroyEntity(animRef.animatorEntity);
+                DestroyChild(ref state, ref ecb, animRef.animatorEntity);
             }
 
             ecb.Playback(state.EntityManager);
             ecb.Dispose();
+        }
+
+        // Child Entity 전부 삭제
+        private void DestroyChild(ref SystemState state, ref EntityCommandBuffer ecb, Entity entity) {
+            bool isHas = SystemAPI.HasBuffer<Child>(entity);
+            if (isHas) {
+                DynamicBuffer<Child> buffers = SystemAPI.GetBuffer<Child>(entity);
+                foreach (var child in buffers) {
+                    DestroyChild(ref state, ref ecb, child.Value);
+                }
+            }
+            ecb.DestroyEntity(entity);
+
         }
     }
 }
