@@ -15,4 +15,13 @@ namespace Game.Ecs.ComponentAndTag
         public Animator animator;
         public Transform transform;
     }
+
+    public partial struct AnimationProperties : IComponentData {
+        public int attack;
+        public int preAttack;
+        public int triggerHash;
+        public bool isTrigger;
+        public bool isMove;
+        public bool preMove;
+    }
 }

@@ -27,5 +27,7 @@ namespace Game.Ecs.System
                 _targetPositionUpdate_listener?.Invoke(aspect.GetPosition());
             }
         }
+
+        
     }
 }

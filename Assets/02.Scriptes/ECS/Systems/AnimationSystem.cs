@@ -5,8 +5,13 @@ using Unity.Entities;
 using Unity.Burst;
 using Game.Ecs.ComponentAndTag;
 using Unity.Transforms;
+using Game.Utils;
 namespace Game.Ecs.System
-{
+{   
+    /// <summary>
+    /// Hybrid Object와 Entity를 맵핑 
+    /// Animation Properties의 정보를 Hybrid Animator에 전달하는 역할
+    /// </summary>
     public partial struct AnimationSystem : ISystem
     {
         void OnCreate(ref SystemState state) {
@@ -17,11 +22,35 @@ namespace Game.Ecs.System
         }
         void OnUpdate(ref SystemState state) {
 
-            // Hybrid Object와 Entity Position Rotation 매치 
-            foreach(var (animRef, transform) in SystemAPI.Query<AnimationReference, LocalTransform>()) {
-                animRef.transform.position = transform.Position;
-                animRef.transform.rotation = transform.Rotation;
+
+           
+            foreach(var (animRef, animPro, transform) in SystemAPI.Query<AnimationReference, RefRW<AnimationProperties> , RefRO<LocalTransform>>()) {
+                // Hybrid Object와 Entity Position Rotation 맵핑
+                animRef.transform.position = transform.ValueRO.Position;
+                animRef.transform.rotation = transform.ValueRO.Rotation;
+
+                /// Animator
+                // Move 전달
+                if (animPro.ValueRO.preMove != animPro.ValueRO.isMove) {
+                    animPro.ValueRW.preMove = animPro.ValueRO.isMove;
+                    animRef.animator.SetBool(AnimationHash.Walk, animPro.ValueRO.isMove);
+                }
+                // Attack 전달
+                if (animPro.ValueRO.preAttack != animPro.ValueRO.attack) {
+                    animPro.ValueRW.preAttack = animPro.ValueRO.attack;
+                    animRef.animator.SetInteger(AnimationHash.Attack, animPro.ValueRO.attack);
+                }
+                // Trigger 전달
+                if (animPro.ValueRO.isTrigger) {
+                    animPro.ValueRW.isTrigger = false;
+                    animRef.animator.SetTrigger(animPro.ValueRO.triggerHash);
+                }
+                
+
+
             }
+
+
 
         }
     }

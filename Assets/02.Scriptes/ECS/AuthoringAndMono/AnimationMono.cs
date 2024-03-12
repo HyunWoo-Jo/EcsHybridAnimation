@@ -15,6 +15,11 @@ namespace Game.Ecs.AuthoringsAndMono
                     prefab = authoring._animatorObject,
                     animatorEntity = GetEntity(authoring._animatorObject, TransformUsageFlags.Dynamic)
                 });
+                AddComponent(entity, new AnimationProperties {
+                    attack = -1,
+                    preAttack = -1
+                    
+                });
                 
             }
         }
