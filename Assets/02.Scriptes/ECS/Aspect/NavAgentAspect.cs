@@ -21,12 +21,14 @@ namespace Game.Ecs.Aspect
             get { return _localTransform.ValueRO.Rotation; }
             set { _localTransform.ValueRW.Rotation = value; }
         }
-        public bool IsStop() {
-            return _navAgentProperties.ValueRO.isStop;
+        public bool IsStop {
+            get { return _navAgentProperties.ValueRO.isStop; }
+            set { _navAgentProperties.ValueRW.isStop = value; }
         }
 
-        public bool IsFinded() {
-            return _navAgentProperties.ValueRO.isPathFinded;
+        public bool IsFinded {
+            get { return _navAgentProperties.ValueRO.isPathFinded; }
+            set { _navAgentProperties.ValueRW.isPathFinded = value; }
         }
 
         public Entity GetTargetEntity() {
@@ -66,7 +68,7 @@ namespace Game.Ecs.Aspect
             if(_navAgentProperties.ValueRO.curretWaypoint + 1 < _waypointBuffer.Length) {
                 _navAgentProperties.ValueRW.curretWaypoint++;
             } else {
-                if(IsFinded()) _navAgentProperties.ValueRW.isStop = true;
+                if(IsFinded) _navAgentProperties.ValueRW.isStop = true;
             }
         }
     }

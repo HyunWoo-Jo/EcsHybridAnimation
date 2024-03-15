@@ -11,6 +11,7 @@ namespace Game.Ecs.Aspect
         private readonly RefRO<PlayerTag> _playerTag;
         private readonly RefRW<NavAgentProperties> _navAgentPropert;
         private readonly RefRW<AnimationProperties> _animationProperties;
+        private readonly RefRW<PlayerProperties> _playerProperties;
 
         public bool IsStop() {
             return _navAgentPropert.ValueRO.isStop || !_navAgentPropert.ValueRO.isPathFinded;
@@ -19,6 +20,14 @@ namespace Game.Ecs.Aspect
 
         public void Walk(bool isWalk) {
             _animationProperties.ValueRW.isMove = isWalk;
+        }
+
+        public void SetStop(bool isValue) {
+            _navAgentPropert.ValueRW.isStop = isValue;
+        }
+
+        public void SetPathFinded(bool isValue) {
+            _navAgentPropert.ValueRW.isPathFinded = isValue;
         }
 
     }

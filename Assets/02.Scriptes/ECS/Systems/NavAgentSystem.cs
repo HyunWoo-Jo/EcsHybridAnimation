@@ -34,8 +34,8 @@ namespace Game.Ecs.System {
             float deltaTime = SystemAPI.Time.DeltaTime;
             foreach (var navAspect in SystemAPI.Query<NavAgentAspect>()) {
                 FindPath(ref state, navAspect, deltaTime);
-                if (navAspect.IsStop()) return;
-                if (navAspect.IsFinded()) {
+                if (navAspect.IsStop) return;
+                if (navAspect.IsFinded) {
                     Move(navAspect, deltaTime);
                 }
             }
@@ -47,7 +47,7 @@ namespace Game.Ecs.System {
 
         [BurstCompile]
         private void FindPath(ref SystemState state, NavAgentAspect navAspect, float deltaTime) {
-            if (navAspect.IsFinded()) return;
+            if (navAspect.IsFinded) return;
            
             // °Ë»ö
             float3 startPosition = navAspect.Position;
