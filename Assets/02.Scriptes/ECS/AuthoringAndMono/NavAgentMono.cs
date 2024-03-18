@@ -11,7 +11,6 @@ namespace Game.Ecs.AuthoringsAndMono
     {
         [SerializeField] private Transform _targetTransform;
         [SerializeField] private float _moveSpeed;
-        [SerializeField] private float _rotationSpeed;
         [SerializeField] private float _traceRange;
 #if UNITY_EDITOR
         private void Awake() {
@@ -25,8 +24,7 @@ namespace Game.Ecs.AuthoringsAndMono
                 AddComponent(entity, new NavAgentProperties {
                     moveSpeed = authoring._moveSpeed,
                     targetEntity = targetEntity,
-                    traceRange = authoring._traceRange,
-                    rotationSpeed = authoring._rotationSpeed
+                    traceRange = authoring._traceRange
                 });
                 AddBuffer<WaypointBuffer>(entity);
             }

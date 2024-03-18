@@ -11,7 +11,7 @@ namespace Game.Ecs.Aspect
         private readonly RefRO<PlayerTag> _playerTag;
         private readonly RefRW<NavAgentProperties> _navAgentPropert;
         private readonly RefRW<AnimationProperties> _animationProperties;
-        private readonly RefRW<PlayerProperties> _playerProperties;
+        private readonly RefRW<StatusProperties> _statusProperties;
 
         public bool IsStop() {
             return _navAgentPropert.ValueRO.isStop || !_navAgentPropert.ValueRO.isPathFinded;
@@ -28,6 +28,10 @@ namespace Game.Ecs.Aspect
 
         public void SetPathFinded(bool isValue) {
             _navAgentPropert.ValueRW.isPathFinded = isValue;
+        }
+
+        public void Attack() {
+            _animationProperties.ValueRW.attack = 0;
         }
 
     }

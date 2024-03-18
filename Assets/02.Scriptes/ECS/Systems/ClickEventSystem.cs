@@ -79,6 +79,7 @@ namespace Game.Ecs.System
             if (RayCast(rayStart, rayEnd, out var raycastHit)) {
                 foreach (var playerAspect in SystemAPI.Query<PlayerAspect>()) {
                     playerAspect.SetStop(true);
+                    playerAspect.Attack();
                 }
             }
         }

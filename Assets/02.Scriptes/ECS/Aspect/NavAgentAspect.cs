@@ -12,6 +12,7 @@ namespace Game.Ecs.Aspect
         private readonly RefRW<LocalTransform> _localTransform;
         private readonly RefRW<NavAgentProperties> _navAgentProperties;
         private readonly DynamicBuffer<WaypointBuffer> _waypointBuffer;
+        private readonly RefRW<RotationProperties> _rotationProperties;
 
         public float3 Position {
             get { return _localTransform.ValueRO.Position; }
@@ -43,9 +44,6 @@ namespace Game.Ecs.Aspect
         public float GetTraceRange() {
             return _navAgentProperties.ValueRO.traceRange;
         }
-        public float GetRotationSpeed() {
-            return _navAgentProperties.ValueRO.rotationSpeed;
-        }
 
         /// <summary>
         /// 검색 완료 후 Nav Properties 리셋
@@ -70,6 +68,15 @@ namespace Game.Ecs.Aspect
             } else {
                 if(IsFinded) _navAgentProperties.ValueRW.isStop = true;
             }
+        }
+            
+        public void SetTragetPosition(float3 value) {
+            _rotationProperties.ValueRW.targetPosition = value;
+        }
+
+        public bool IsTurnStop {
+            get { return _rotationProperties.ValueRO.isStop; }
+            set { _rotationProperties.ValueRW.isStop = value; }
         }
     }
 }

@@ -109,12 +109,10 @@ namespace Game.Ecs.System {
             if (math.distance(position, currentWayPosition) < navAspect.GetTraceRange()) {
                 navAspect.NextWaypoint();
             }
+            navAspect.SetTragetPosition(currentWayPosition);
             float3 direction = currentWayPosition - position;
             if (direction.x == 0f && direction.z == 0f) return;
-            // 회전
-            quaternion targetRotation = quaternion.LookRotation(direction, new float3(0, 1, 0));
-            float angle = math.degrees(math.atan2(direction.z, direction.x));
-            navAspect.Rotation = math.slerp(navAspect.Rotation, targetRotation, navAspect.GetRotationSpeed() *  deltaTime);
+            navAspect.IsTurnStop = false;
             // 이동
             navAspect.Position += math.normalize(direction) * navAspect.GetMoveSpeed() * deltaTime;
         }
