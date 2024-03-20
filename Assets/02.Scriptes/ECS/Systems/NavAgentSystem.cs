@@ -16,14 +16,18 @@ namespace Game.Ecs.System {
     [BurstCompile]
     public partial struct NavAgentSystem : ISystem {
 
-        private NavMeshQuery navQuery;
-        float3 extents;
-        int maxPathSize;
+        private NavMeshQuery _navQuery;
+        private float3 _extents;
+        private int _maxPathSize;
+
+        private float _timer;
+        private float _reserchTime;
+
         [BurstCompile]
         private void OnCreate(ref SystemState state) {
             CreateNavMesh();
-            extents = new float3(1, 1, 1);
-            maxPathSize = 100;
+            _extents = new float3(1, 1, 1);
+            _maxPathSize = 100;
         }
         [BurstCompile]
         private void OnDestroy(ref SystemState state) {
@@ -33,7 +37,7 @@ namespace Game.Ecs.System {
         private void OnUpdate(ref SystemState state) {
             float deltaTime = SystemAPI.Time.DeltaTime;
             foreach (var navAspect in SystemAPI.Query<NavAgentAspect>()) {
-                FindPath(ref state, navAspect, deltaTime);
+                FindPath(ref state, navAspect);
                 if (navAspect.IsStop) return;
                 if (navAspect.IsFinded) {
                     Move(navAspect, deltaTime);
@@ -42,39 +46,38 @@ namespace Game.Ecs.System {
         }
 
         private void CreateNavMesh() {
-            navQuery = new NavMeshQuery(NavMeshWorld.GetDefaultWorld(), Allocator.Persistent, 1000);
+            _navQuery = new NavMeshQuery(NavMeshWorld.GetDefaultWorld(), Allocator.Persistent, 1000);
         }
 
         [BurstCompile]
-        private void FindPath(ref SystemState state, NavAgentAspect navAspect, float deltaTime) {
+        private void FindPath(ref SystemState state, NavAgentAspect navAspect) {
             if (navAspect.IsFinded) return;
-           
             // °Ë»ö
             float3 startPosition = navAspect.Position;
             float3 endPosition = SystemAPI.GetComponent<LocalTransform>(navAspect.GetTargetEntity()).Position;
 
-            NavMeshLocation startLocation = navQuery.MapLocation(startPosition, extents, 0);
-            NavMeshLocation endLocation = navQuery.MapLocation(endPosition, extents, 0);
+            NavMeshLocation startLocation = _navQuery.MapLocation(startPosition, _extents, 0);
+            NavMeshLocation endLocation = _navQuery.MapLocation(endPosition, _extents, 0);
             PathQueryStatus status;
             PathQueryStatus returningStatus;
-            if (navQuery.IsValid(startLocation) && navQuery.IsValid(endLocation)) {
-                status = navQuery.BeginFindPath(startLocation, endLocation);
+            if (_navQuery.IsValid(startLocation) && _navQuery.IsValid(endLocation)) {
+                status = _navQuery.BeginFindPath(startLocation, endLocation);
                 if (status == PathQueryStatus.InProgress) {
-                    status = navQuery.UpdateFindPath(maxPathSize, out int iterationsPerformed);  
+                    status = _navQuery.UpdateFindPath(_maxPathSize, out int iterationsPerformed);  
                 }
                 if (status == PathQueryStatus.Success) {
-                    status = navQuery.EndFindPath(out int pathSize);
+                    status = _navQuery.EndFindPath(out int pathSize);
 
                     NativeArray<NavMeshLocation> result = new NativeArray<NavMeshLocation>(pathSize + 1, Allocator.Temp);
-                    NativeArray<StraightPathFlags> straightPathFlags = new NativeArray<StraightPathFlags>(maxPathSize, Allocator.Temp);
-                    NativeArray<float> vertexSize = new NativeArray<float>(maxPathSize, Allocator.Temp);
+                    NativeArray<StraightPathFlags> straightPathFlags = new NativeArray<StraightPathFlags>(_maxPathSize, Allocator.Temp);
+                    NativeArray<float> vertexSize = new NativeArray<float>(_maxPathSize, Allocator.Temp);
                     NativeArray<PolygonId> polygonIds = new NativeArray<PolygonId>(pathSize + 1, Allocator.Temp);
                     int straightPathCount = 0;
 
-                    navQuery.GetPathResult(polygonIds);
+                    _navQuery.GetPathResult(polygonIds);
 
                     returningStatus = PathUtils.FindStraightPath(
-                        navQuery,
+                        _navQuery,
                         startPosition,
                         endPosition,
                         polygonIds,
@@ -83,7 +86,7 @@ namespace Game.Ecs.System {
                         ref straightPathFlags,
                         ref vertexSize,
                         ref straightPathCount,
-                        maxPathSize
+                        _maxPathSize
                         );
                     if (returningStatus == PathQueryStatus.Success) {
                         navAspect.ClearWaypointBuffer();
@@ -99,15 +102,15 @@ namespace Game.Ecs.System {
                     polygonIds.Dispose();
                     vertexSize.Dispose();
                 }
-            }
+            } 
         }
         private void Move(NavAgentAspect navAspect, float deltaTime) {
             float3 position = navAspect.Position;
             float3 currentWayPosition = navAspect.GetCurrentWaypointPosition();
             position.y = 0f;
-            currentWayPosition.y = 0.02f;
             if (math.distance(position, currentWayPosition) < navAspect.GetTraceRange()) {
                 navAspect.NextWaypoint();
+                currentWayPosition = navAspect.GetCurrentWaypointPosition();
             }
             navAspect.SetTragetPosition(currentWayPosition);
             float3 direction = currentWayPosition - position;

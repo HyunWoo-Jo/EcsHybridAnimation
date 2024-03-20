@@ -59,8 +59,9 @@ namespace Game.Ecs.Aspect
         public void AddWaypointBuffer(float3 position) {
             _waypointBuffer.Add(new WaypointBuffer { waypoint = position });
         }
+
         public float3 GetCurrentWaypointPosition() {
-            return _waypointBuffer[_navAgentProperties.ValueRO.curretWaypoint].waypoint;
+            return _waypointBuffer[_navAgentProperties.ValueRO.curretWaypoint].waypoint * new float3(1,0,1);
         }
         public void NextWaypoint() {
             if(_navAgentProperties.ValueRO.curretWaypoint + 1 < _waypointBuffer.Length) {

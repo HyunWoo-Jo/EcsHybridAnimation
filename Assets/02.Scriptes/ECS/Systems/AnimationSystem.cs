@@ -20,16 +20,18 @@ namespace Game.Ecs.System
         void OnDestroy(ref SystemState state) {
 
         }
-        void OnUpdate(ref SystemState state) {
-
-
-           
+        void OnUpdate(ref SystemState state) {       
             foreach(var (animRef, animPro, transform) in SystemAPI.Query<AnimationReference, RefRW<AnimationProperties> , RefRO<LocalTransform>>()) {
                 // Hybrid Object와 Entity Position Rotation 맵핑
                 animRef.transform.position = transform.ValueRO.Position;
                 animRef.transform.rotation = transform.ValueRO.Rotation;
 
                 /// Animator
+                // attack 모션이 끝나면 초기화
+                if (animRef.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && !animRef.animator.GetNextAnimatorStateInfo(0).IsName("Attack_" + animPro.ValueRO.attack.ToString())) {
+                    animPro.ValueRW.attack = -1;
+                }
+
                 // Move 전달
                 if (animPro.ValueRO.preMove != animPro.ValueRO.isMove) {
                     animPro.ValueRW.preMove = animPro.ValueRO.isMove;
@@ -45,8 +47,6 @@ namespace Game.Ecs.System
                     animPro.ValueRW.isTrigger = false;
                     animRef.animator.SetTrigger(animPro.ValueRO.triggerHash);
                 }
-                
-
 
             }
 

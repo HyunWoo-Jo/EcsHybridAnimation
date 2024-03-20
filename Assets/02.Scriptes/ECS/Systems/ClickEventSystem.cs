@@ -24,25 +24,46 @@ namespace Game.Ecs.System
 
         private Action _leftClick_listener;
         private Action _rightClick_listener;
+
+        private int attackCount = -1;
+        private bool _isLeftClick;
+        private bool _isRightClick;
+
+        
         protected override void OnCreate() {
             base.OnCreate();
             _mainCamera = Camera.main;
 
             _leftClick_listener = MoveClick;
             _rightClick_listener = AttackClick;
+
+            _isLeftClick = false;
+            _isRightClick = false;
         }
         protected override void OnDestroy() {
             base.OnDestroy();
         }
         protected override void OnUpdate() {
-            // Left Click
-            if (Input.GetMouseButton(0)) {
-                _leftClick_listener?.Invoke();
-            }
             // right Click
             if (Input.GetMouseButton(1)) {
                 _rightClick_listener?.Invoke();
+                _isRightClick = true;
             }
+            // Left Click
+            else if (Input.GetMouseButton(0)) {
+                _leftClick_listener?.Invoke();
+                _isLeftClick = true;
+            }
+            // right
+            if (!Input.GetMouseButton(1)) {
+                _isRightClick = false;
+            }
+            // left
+            if (!Input.GetMouseButton(0)) {
+                _isLeftClick = false;
+            }
+
+            ContinueousAttack();
         }
         /// <summary>
         /// 클릭 이동 
@@ -57,10 +78,13 @@ namespace Game.Ecs.System
 #endif
             if (RayCast(rayStart, rayEnd, out var raycastHit)) {
                 foreach (var clickProperties in SystemAPI.Query<ClickEventProperties>()) {
-                    foreach (var playerAsepct in SystemAPI.Query<PlayerAspect>()) {
+                    foreach (var playerAspect in SystemAPI.Query<PlayerAspect>()) {
                         SystemAPI.GetComponentRW<LocalTransform>(clickProperties.clickMovePointEntity).ValueRW.Position = raycastHit.Position;
-                        playerAsepct.SetStop(false);
-                        playerAsepct.SetPathFinded(false);
+                        int attackCount = playerAspect.GetAttackCount();
+                        if (attackCount == -1) {
+                            playerAspect.SetStop(false);
+                            playerAspect.SetPathFinded(false);
+                        }
                     }
                 }
             }
@@ -74,12 +98,37 @@ namespace Game.Ecs.System
             var rayStart = ray.origin;
             var rayEnd = ray.GetPoint(300f);
 #if UNITY_EDITOR
-            Debug.DrawRay(rayStart, rayEnd, Color.red, 1f);
+            Debug.DrawRay(rayStart, rayEnd, Color.blue, 1f);
 #endif
             if (RayCast(rayStart, rayEnd, out var raycastHit)) {
                 foreach (var playerAspect in SystemAPI.Query<PlayerAspect>()) {
+                    
                     playerAspect.SetStop(true);
-                    playerAspect.Attack();
+                    int attackCount = playerAspect.GetAttackCount();
+                    if(attackCount == -1) {
+                        playerAspect.Attack(0);
+                    }
+                    playerAspect.SetTargetPosition(raycastHit.Position);
+                }
+            }
+        }
+        // 공격 버튼이 계속해서 눌려있나 확인 후 계속해서 눌러져있으면 연속 공격 실행
+        private void ContinueousAttack() {
+            foreach (var (animRef, playAspect) in SystemAPI.Query<AnimationReference, PlayerAspect>().WithAll<PlayerTag>()) {
+                int attackCount = playAspect.GetAttackCount();
+                if (attackCount >= 0 && attackCount < 2) { // attack 동작 0부터 1일경우
+                    if (animRef.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack_"+ attackCount.ToString())) { // 모션이 attack 동작일 경우
+                        if(animRef.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7) { // 모션 70 이상 89 이하 상태에서
+                            if(_isRightClick) { // 오른쪽 클릭이 되어있으면
+                                playAspect.IsContinueousAttack = true;
+                                playAspect.Attack(attackCount + 1);
+                            }
+                        } else {// 모션 70 이하 일 경우
+                            playAspect.IsContinueousAttack = false;
+                        }
+                    } 
+                } else { // 동작이 제한범위 밖일경우
+                    playAspect.IsContinueousAttack = false;
                 }
             }
         }

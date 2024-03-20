@@ -27,7 +27,7 @@ namespace Game.Ecs.System
         private partial struct PlayerJob : IJobEntity {
             [BurstCompile]
             private void Execute(PlayerAspect playerAspect, [EntityIndexInQuery] int sortkey) {
-                if (playerAspect.IsStop()) {
+                if (playerAspect.GetIsStop()) {
                     playerAspect.Walk(false);
                 } else {
                     playerAspect.Walk(true);

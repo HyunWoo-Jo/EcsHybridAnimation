@@ -11,9 +11,10 @@ namespace Game.Ecs.Aspect
         private readonly RefRO<PlayerTag> _playerTag;
         private readonly RefRW<NavAgentProperties> _navAgentPropert;
         private readonly RefRW<AnimationProperties> _animationProperties;
+        private readonly RefRW<RotationProperties> _rotationProperties;
         private readonly RefRW<StatusProperties> _statusProperties;
 
-        public bool IsStop() {
+        public bool GetIsStop() {
             return _navAgentPropert.ValueRO.isStop || !_navAgentPropert.ValueRO.isPathFinded;
 
         }
@@ -30,8 +31,19 @@ namespace Game.Ecs.Aspect
             _navAgentPropert.ValueRW.isPathFinded = isValue;
         }
 
-        public void Attack() {
-            _animationProperties.ValueRW.attack = 0;
+        public int GetAttackCount() {
+            return _animationProperties.ValueRO.attack;
+        }
+        public void Attack(int value) {
+            _animationProperties.ValueRW.attack = value;
+        }
+        public bool IsContinueousAttack {
+            get { return _animationProperties.ValueRO.isContinueousAttack; }
+            set { _animationProperties.ValueRW.isContinueousAttack = value; }
+        }
+
+        public void SetTargetPosition(float3 value) {
+            _rotationProperties.ValueRW.targetPosition = value;
         }
 
     }
