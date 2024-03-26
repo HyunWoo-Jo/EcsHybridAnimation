@@ -6,13 +6,13 @@ using Game.Ecs.ComponentAndTag;
 using Game.Utils;
 namespace Game.Ecs.AuthoringsAndMono
 {
-    public class ClickEventMono : MonoBehaviour
+    public class InputEventMono : MonoBehaviour
     {
         [SerializeField] private GameObject _clickMovePoint;
-        private class ClickEventBaker : Baker<ClickEventMono> {
-            public override void Bake(ClickEventMono authoring) {
+        private class InputEventBaker : Baker<InputEventMono> {
+            public override void Bake(InputEventMono authoring) {
                 Entity entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
-                AddComponent(entity, new ClickEventProperties {
+                AddComponent(entity, new InputEventProperties {
                     clickMovePointEntity = GetEntity(authoring._clickMovePoint, TransformUsageFlags.Dynamic)
                 });
             }

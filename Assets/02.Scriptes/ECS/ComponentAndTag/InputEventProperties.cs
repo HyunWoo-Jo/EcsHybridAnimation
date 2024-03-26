@@ -6,7 +6,7 @@ using Game.Utils;
 
 namespace Game.Ecs.ComponentAndTag
 {
-    public partial struct ClickEventProperties : IComponentData    {
+    public partial struct InputEventProperties : IComponentData    {
         public Entity clickMovePointEntity;
     }
 }

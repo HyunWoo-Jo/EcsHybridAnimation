@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 455505399}
   - component: {fileID: 455505400}
   m_Layer: 0
-  m_Name: ClickEvent
+  m_Name: InputEvent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.23333333
+  m_VoxelSize: 0.2
   m_MinRegionArea: 20
   m_NavMeshData: {fileID: 23800000, guid: 967ade29a94283343b8c23f805816482, type: 2}
   m_BuildHeightMesh: 0

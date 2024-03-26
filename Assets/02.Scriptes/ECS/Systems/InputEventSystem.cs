@@ -17,7 +17,7 @@ namespace Game.Ecs.System
     [BurstCompile]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     [UpdateBefore(typeof(PhysicsSystemGroup))]
-    public partial class ClickEventSystem : SystemBase
+    public partial class InputEventSystem : SystemBase
     {
         private Camera _mainCamera;
         private PhysicsWorld _physicsWorld;
@@ -73,11 +73,20 @@ namespace Game.Ecs.System
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             var rayStart = ray.origin;
             var rayEnd = ray.GetPoint(300f);
+            var raycastInput = new RaycastInput {
+                Start = rayStart,
+                End = rayEnd,
+                Filter = new CollisionFilter {
+                    GroupIndex = 0,
+                    BelongsTo = (uint)LayerName.Ground,
+                    CollidesWith = (uint)LayerName.All
+                }
+            };
 #if UNITY_EDITOR
             Debug.DrawRay(rayStart, rayEnd, Color.red, 1f);
 #endif
-            if (RayCast(rayStart, rayEnd, out var raycastHit)) {
-                foreach (var clickProperties in SystemAPI.Query<ClickEventProperties>()) {
+            if (_physicsWorld.CastRay(raycastInput, out var raycastHit)) {
+                foreach (var clickProperties in SystemAPI.Query<InputEventProperties>()) {
                     foreach (var playerAspect in SystemAPI.Query<PlayerAspect>()) {
                         SystemAPI.GetComponentRW<LocalTransform>(clickProperties.clickMovePointEntity).ValueRW.Position = raycastHit.Position;
                         int attackCount = playerAspect.GetAttackCount();
@@ -97,10 +106,19 @@ namespace Game.Ecs.System
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             var rayStart = ray.origin;
             var rayEnd = ray.GetPoint(300f);
+            var raycastInput = new RaycastInput {
+                Start = rayStart,
+                End = rayEnd,
+                Filter = new CollisionFilter {
+                    GroupIndex = 0,
+                    BelongsTo = (uint)LayerName.Ground,
+                    CollidesWith = (uint)LayerName.All
+                }
+            };
 #if UNITY_EDITOR
             Debug.DrawRay(rayStart, rayEnd, Color.blue, 1f);
 #endif
-            if (RayCast(rayStart, rayEnd, out var raycastHit)) {
+            if (_physicsWorld.CastRay(raycastInput, out var raycastHit)) {
                 foreach (var playerAspect in SystemAPI.Query<PlayerAspect>()) {
                     
                     playerAspect.SetStop(true);
@@ -131,19 +149,6 @@ namespace Game.Ecs.System
                     playAspect.IsContinueousAttack = false;
                 }
             }
-        }
-
-        private bool RayCast(float3 rayStart, float3 rayEnd, out Unity.Physics.RaycastHit raycastHit) {
-            var raycastInput = new RaycastInput {
-                Start = rayStart,
-                End = rayEnd,
-                Filter = new CollisionFilter {
-                    GroupIndex = 0,
-                    BelongsTo = (uint)LayerName.Ground,
-                    CollidesWith = (uint)LayerName.All
-                }
-            };
-            return _physicsWorld.CastRay(raycastInput, out raycastHit);
         }
         
     }
