@@ -18,7 +18,7 @@ namespace Game.Ecs.AuthoringsAndMono
                     aggressiveStrength = authoring._aggressiveStrength,
                     defensivePower = authoring._defensivePower,
                 });
-
+                AddBuffer<HpCalculatorElement>(entity);
             }
         }
 

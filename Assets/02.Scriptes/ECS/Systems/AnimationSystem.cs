@@ -5,7 +5,7 @@ using Unity.Entities;
 using Unity.Burst;
 using Game.Ecs.ComponentAndTag;
 using Unity.Transforms;
-using Game.Utils;
+using Game.Data;
 namespace Game.Ecs.System
 {   
     /// <summary>
@@ -20,15 +20,21 @@ namespace Game.Ecs.System
         void OnDestroy(ref SystemState state) {
 
         }
-        void OnUpdate(ref SystemState state) {       
-            foreach(var (animRef, animPro, transform) in SystemAPI.Query<AnimationReference, RefRW<AnimationProperties> , RefRO<LocalTransform>>()) {
+        void OnUpdate(ref SystemState state) {
+            foreach (var (animRef, animPro, transform) in SystemAPI.Query<AnimationReference, RefRW<AnimationProperties>, RefRO<LocalTransform>>()) {
                 // Hybrid Object와 Entity Position Rotation 맵핑
                 animRef.transform.position = transform.ValueRO.Position;
                 animRef.transform.rotation = transform.ValueRO.Rotation;
 
                 /// Animator
                 // attack 모션이 끝나면 초기화
-                if (animRef.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && !animRef.animator.GetNextAnimatorStateInfo(0).IsName("Attack_" + animPro.ValueRO.attack.ToString())) {
+                int currentAnimationHash = animRef.animator.GetCurrentAnimatorStateInfo(0).tagHash;
+                int nextAnimationHash = animRef.animator.GetNextAnimatorStateInfo(0).tagHash;
+                if (animPro.ValueRO.attack >= 0 && animRef.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && !(nextAnimationHash == AnimationHash.Attack)) {
+                    animPro.ValueRW.attack = -2;
+                }
+                // animation 1번만 실행 되도록 설정
+                if (animPro.ValueRW.attack == -2 && (currentAnimationHash == AnimationHash.Idle || currentAnimationHash == AnimationHash.Walk)) {
                     animPro.ValueRW.attack = -1;
                 }
 

@@ -23,6 +23,7 @@ namespace Game.Ecs.System {
         [BurstCompile]
         void OnUpdate(ref SystemState state) {
             new FreezeJob { }.ScheduleParallel();
+
         }
 
         [BurstCompile]

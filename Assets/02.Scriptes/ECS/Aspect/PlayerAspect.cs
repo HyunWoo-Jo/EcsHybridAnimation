@@ -31,23 +31,6 @@ namespace Game.Ecs.Aspect
             _navAgentPropert.ValueRW.isPathFinded = isValue;
         }
 
-        public int GetAttackCount() {
-            return _animationProperties.ValueRO.attack;
-        }
-        public void Attack(int value) {
-            _animationProperties.ValueRW.attack = value;
-            switch (value) {
-                case 0:
-
-                break;
-                case 1:
-                    break;
-                case 2:
-                break;
-                case 3:
-                break;
-            }
-        }
         public bool IsContinueousAttack {
             get { return _animationProperties.ValueRO.isContinueousAttack; }
             set { _animationProperties.ValueRW.isContinueousAttack = value; }

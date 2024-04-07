@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using Game.Ecs.ComponentAndTag;
 namespace Game.Ecs.AuthoringsAndMono
 {
+    [RequireComponent(typeof(RotationMono))]
     public class NavAgentMono : MonoBehaviour
     {
         [SerializeField] private Transform _targetTransform;

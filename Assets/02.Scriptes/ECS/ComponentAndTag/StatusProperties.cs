@@ -10,4 +10,8 @@ namespace Game.Ecs.ComponentAndTag
         public float aggressiveStrength;
         public float defensivePower;
     }
+
+    public partial struct HpCalculatorElement : IBufferElementData {
+        public float value;
+    }
 }

@@ -7,20 +7,26 @@ namespace Game.Ecs.Aspect
 {
     public readonly partial struct AttackAspect : IAspect
     {
-        private readonly RefRW<AttackBuffer> _attackBuffer;
-
-
+        private readonly DynamicBuffer<AttackRayElement> _attackBuffer;
+        private readonly RefRW<AnimationProperties> _animationProperties;
+        private readonly RefRW<StatusProperties> _statusProperties;
 
         public DynamicBuffer<AttackRayElement> GetRays() {
-            return _attackBuffer.ValueRO.attackRayBuffer;
+            return _attackBuffer;
         }
 
         public void AddBuffer(AttackRayElement attackRay) {
-            _attackBuffer.ValueRW.attackRayBuffer.Add(attackRay);
+            _attackBuffer.Add(attackRay);
         }
 
         public void ClearBuffer() {
-            _attackBuffer.ValueRW.attackRayBuffer.Clear();
+            _attackBuffer.Clear();
+        }
+        public int GetAttackAnimationCount() {
+            return _animationProperties.ValueRO.attack;
+        }
+        public void Attack(int value) {
+            _animationProperties.ValueRW.attack = value;
         }
     }
 }

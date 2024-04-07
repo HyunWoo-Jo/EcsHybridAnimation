@@ -128,7 +128,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3793954972396247588, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
   m_PrefabInstance: {fileID: 3725117775652703482}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &205981122
+--- !u!114 &205981144
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,10 +137,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 205981112}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1596065a10a127943838a22b933b97f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f35a710567762c409f5fe728c2f0351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 10
 --- !u!1 &376682015
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,13 +810,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9064295704364095909, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: _hp
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064295704364095909, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: _defensivePower
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064295704364095909, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: _aggressiveStrength
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9202588178866706439, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: _rotationSpeed
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3793954972396247588, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 205981122}
+      addedObject: {fileID: 205981144}
   m_SourcePrefab: {fileID: 100100000, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
 --- !u!23 &3902538060147596502
 MeshRenderer:

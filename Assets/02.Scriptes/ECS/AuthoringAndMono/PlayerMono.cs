@@ -7,7 +7,6 @@ namespace Game.Ecs.AuthoringsAndMono
 {
     public class PlayerMono : MonoBehaviour
     {
-
         private class PlayerBaker : Baker<PlayerMono> {
             public override void Bake(PlayerMono authoring) {
                 Entity entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);

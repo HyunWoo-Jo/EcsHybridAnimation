@@ -87,9 +87,9 @@ namespace Game.Ecs.System
 #endif
             if (_physicsWorld.CastRay(raycastInput, out var raycastHit)) {
                 foreach (var clickProperties in SystemAPI.Query<InputEventProperties>()) {
-                    foreach (var playerAspect in SystemAPI.Query<PlayerAspect>()) {
+                    foreach (var (playerAspect, attackAspect) in SystemAPI.Query<PlayerAspect, AttackAspect>().WithAll<PlayerTag>()) {
                         SystemAPI.GetComponentRW<LocalTransform>(clickProperties.clickMovePointEntity).ValueRW.Position = raycastHit.Position;
-                        int attackCount = playerAspect.GetAttackCount();
+                        int attackCount = attackAspect.GetAttackAnimationCount();
                         if (attackCount == -1) {
                             playerAspect.SetStop(false);
                             playerAspect.SetPathFinded(false);
@@ -119,12 +119,13 @@ namespace Game.Ecs.System
             Debug.DrawRay(rayStart, rayEnd, Color.blue, 1f);
 #endif
             if (_physicsWorld.CastRay(raycastInput, out var raycastHit)) {
-                foreach (var playerAspect in SystemAPI.Query<PlayerAspect>()) {
+                foreach (var (playerAspect, attackAspect) in SystemAPI.Query<PlayerAspect, AttackAspect>().WithAll<PlayerTag>()) {
                     
                     playerAspect.SetStop(true);
-                    int attackCount = playerAspect.GetAttackCount();
+                    int attackCount = attackAspect.GetAttackAnimationCount();
                     if(attackCount == -1) {
-                        playerAspect.Attack(0);
+                        attackAspect.Attack(0);
+                       
                     }
                     playerAspect.SetTargetPosition(raycastHit.Position);
                 }
@@ -132,21 +133,21 @@ namespace Game.Ecs.System
         }
         // 공격 버튼이 계속해서 눌려있나 확인 후 계속해서 눌러져있으면 연속 공격 실행
         private void ContinueousAttack() {
-            foreach (var (animRef, playAspect) in SystemAPI.Query<AnimationReference, PlayerAspect>().WithAll<PlayerTag>()) {
-                int attackCount = playAspect.GetAttackCount();
+            foreach (var (animRef, playerAspect, attackAspect) in SystemAPI.Query<AnimationReference, PlayerAspect, AttackAspect>().WithAll<PlayerTag>()) {
+                int attackCount = attackAspect.GetAttackAnimationCount();
                 if (attackCount >= 0 && attackCount < 2) { // attack 동작 0부터 1일경우
                     if (animRef.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack_"+ attackCount.ToString())) { // 모션이 attack 동작일 경우
                         if(animRef.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7) { // 모션 70 이상 89 이하 상태에서
                             if(_isRightClick) { // 오른쪽 클릭이 되어있으면
-                                playAspect.IsContinueousAttack = true;
-                                playAspect.Attack(attackCount + 1);
+                                playerAspect.IsContinueousAttack = true;
+                                attackAspect.Attack(attackCount + 1);
                             }
                         } else {// 모션 70 이하 일 경우
-                            playAspect.IsContinueousAttack = false;
+                            playerAspect.IsContinueousAttack = false;
                         }
                     } 
                 } else { // 동작이 제한범위 밖일경우
-                    playAspect.IsContinueousAttack = false;
+                    playerAspect.IsContinueousAttack = false;
                 }
             }
         }

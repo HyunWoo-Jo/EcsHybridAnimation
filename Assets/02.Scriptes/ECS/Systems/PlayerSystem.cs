@@ -26,12 +26,14 @@ namespace Game.Ecs.System
         [BurstCompile]
         private partial struct PlayerJob : IJobEntity {
             [BurstCompile]
-            private void Execute(PlayerAspect playerAspect, [EntityIndexInQuery] int sortkey) {
+            private void Execute(PlayerAspect playerAspect) {
                 if (playerAspect.GetIsStop()) {
                     playerAspect.Walk(false);
                 } else {
                     playerAspect.Walk(true);
                 }
+
+                
             }
         }
     }

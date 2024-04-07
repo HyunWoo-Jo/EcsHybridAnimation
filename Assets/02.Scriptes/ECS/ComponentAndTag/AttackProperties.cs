@@ -14,4 +14,8 @@ namespace Game.Ecs.ComponentAndTag
         public float attackPoint;
         public bool isNewRay; // ture 새로운 레이, false 트루 레이가 나올때 까지 같은 Entite에 대한 컨택이 없음 
     }
+
+    public partial struct AttackRayBuffer : IComponentData {
+
+    }
 }

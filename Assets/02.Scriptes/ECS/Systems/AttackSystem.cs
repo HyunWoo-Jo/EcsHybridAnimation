@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Physics;
@@ -11,8 +12,6 @@ namespace Game.Ecs.System
     [BurstCompile]
     public partial struct AttackSystem : ISystem
     {
-        private PhysicsWorld _physicsWorld;
-            
         void OnCreate(ref SystemState state) {
 
         }
@@ -20,31 +19,27 @@ namespace Game.Ecs.System
 
         }
         void OnUpdate(ref SystemState state) {
-            _physicsWorld = SystemAPI.GetSingletonRW<PhysicsWorldSingleton>().ValueRW.PhysicsWorld;
-
-            new AttackJob {
-                physicsWorld = _physicsWorld
-            }.ScheduleParallel();
-            
-        }
-
-        private partial struct AttackJob : IJobEntity {
-
-            public PhysicsWorld physicsWorld;
-            public void Execute(AttackAspect attackAspect) {
-                NativeList<RaycastHit> hitList = new();
+            PhysicsWorld physicsWorld = SystemAPI.GetSingletonRW<PhysicsWorldSingleton>().ValueRW.PhysicsWorld;
+           
+            foreach (var attackAspect in SystemAPI.Query<AttackAspect>()) {
+                NativeList<Unity.Physics.RaycastHit> hitList = new();
                 NativeHashSet<Entity> hitEntitySet = new();
-                foreach(var ray in attackAspect.GetRays()) {
-                    if(physicsWorld.CastRay(ray.rayInput, ref hitList)) {
-                        if(ray.isNewRay) {
+                foreach (var ray in attackAspect.GetRays()) {
+#if UNITY_EDITOR
+                    Debug.DrawRay(ray.rayInput.Start, ray.rayInput.End, Color.blue, 1f);
+#endif
+                    if (physicsWorld.CastRay(ray.rayInput, ref hitList)) {
+                        if (ray.isNewRay) {
                             hitEntitySet.Clear();
                         }
+                        // 중복 hit 처리
                         foreach (var hit in hitList) {
                             if (!hitEntitySet.Contains(hit.Entity)) {
-                                // entity hit buffer에 어택 추가 구현
-
+                                // 데미지 처리
+                                StatusAspect statusAspect = SystemAPI.GetAspect<StatusAspect>(hit.Entity);
+                                statusAspect.AddBuffer(ray.attackPoint);
                                 hitEntitySet.Add(hit.Entity);
-                            }    
+                            }
                         }
                         hitList.Clear();
                     }
@@ -52,6 +47,10 @@ namespace Game.Ecs.System
                 hitList.Dispose();
                 hitEntitySet.Dispose();
             }
+            
+
         }
+
+
     }
 }
