@@ -5,7 +5,6 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using Game.Ecs.ComponentAndTag;
-using Game.Utils;
 namespace Game.Ecs.Aspect
 {
     public readonly partial struct AttackAspect : IAspect
@@ -31,7 +30,7 @@ namespace Game.Ecs.Aspect
         }
 
         public float3 LocalToGlobal(float3 childPosition) {
-            return _localTransform.ValueRO.ChangePositionLocalToWorld(childPosition);
+            return _localTransform.ValueRO.TransformPoint(childPosition);
         }
 
         public float3 TransformDirection(float3 direciton) {

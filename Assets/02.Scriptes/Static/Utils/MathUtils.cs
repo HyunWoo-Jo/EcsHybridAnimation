@@ -9,6 +9,7 @@ namespace Game.Utils
 {
     public static class MathUtils 
     {
+        /// InversePoint·Î ±³Ã¼
        public static float3 ChangePositionLocalToWorld(this LocalTransform parentTransform ,float3 localPosition) {
             Matrix4x4 parentMatrix = parentTransform.ToMatrix();
             var childMatrix = new float4 { x = localPosition.x, y = localPosition.y, z = localPosition.z, w = 1 };
