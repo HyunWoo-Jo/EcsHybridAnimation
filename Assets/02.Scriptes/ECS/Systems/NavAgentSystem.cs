@@ -20,9 +20,6 @@ namespace Game.Ecs.System {
         private float3 _extents;
         private int _maxPathSize;
 
-        private float _timer;
-        private float _reserchTime;
-
         [BurstCompile]
         private void OnCreate(ref SystemState state) {
             CreateNavMesh();

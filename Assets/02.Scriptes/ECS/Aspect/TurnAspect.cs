@@ -5,7 +5,6 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using Game.Ecs.ComponentAndTag;
-
 namespace Game.Ecs.Aspect
 {
     public readonly partial struct RotationAspect : IAspect

@@ -3,7 +3,9 @@
     "rootNamespace": "Game.Data",
     "references": [
         "GUID:e0cd26848372d4e5c891c569017e11f1",
-        "GUID:63afb046c8423dd448ae7aba042ea63d"
+        "GUID:63afb046c8423dd448ae7aba042ea63d",
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:0b6c1d5c3aeae3048980d79678507df6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

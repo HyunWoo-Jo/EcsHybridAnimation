@@ -140,6 +140,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f35a710567762c409f5fe728c2f0351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackRayDataList:
+  - {fileID: 11400000, guid: 77ce0177c1be51a4bb6a6a86c9beed57, type: 2}
+  - {fileID: 11400000, guid: e89ce102e8348fc418bd6a3509b7a269, type: 2}
+  - {fileID: 11400000, guid: df92718207fe5b5479b25892c062ae12, type: 2}
+  _skillRayDataList: []
 --- !u!1 &376682015
 GameObject:
   m_ObjectHideFlags: 0

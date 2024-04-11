@@ -30,7 +30,6 @@ namespace Game.Ecs.System
             public float deltaTime;
             private void Execute(RotationAspect turnAspect) {
                 if (turnAspect.IsStop) return;
-
                 float3 direction = turnAspect.TargetPosition - turnAspect.Position;
                 direction.y = 0;
                 if (direction.x == 0f && direction.z == 0f) return;

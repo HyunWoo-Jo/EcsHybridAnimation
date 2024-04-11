@@ -25,11 +25,22 @@ namespace Game.Ecs.System
                 NativeList<Unity.Physics.RaycastHit> hitList = new();
                 NativeHashSet<Entity> hitEntitySet = new();
                 foreach (var ray in attackAspect.GetRays()) {
+                    // rayDataElement 형식으로 변환
+                    RaycastInput rayInput = new RaycastInput {
+                        Filter = new CollisionFilter {
+                            BelongsTo = (uint)ray.attackRayBuffer.belongTo,
+                            CollidesWith = (uint)ray.attackRayBuffer.withIn
+                        },
+                        Start = attackAspect.LocalToGlobal(ray.attackRayBuffer.rayStart), // local 좌표 월드로 수정
+                        End = attackAspect.TransformDirection(ray.attackRayBuffer.rayEnd) 
+                    };
+
 #if UNITY_EDITOR
-                    Debug.DrawRay(ray.rayInput.Start, ray.rayInput.End, Color.blue, 1f);
+                    Debug.Log(rayInput.End);
+                    Debug.DrawRay(rayInput.Start, rayInput.End, Color.green, 1f);
 #endif
-                    if (physicsWorld.CastRay(ray.rayInput, ref hitList)) {
-                        if (ray.isNewRay) {
+                    if (physicsWorld.CastRay(rayInput, ref hitList)) {
+                        if (ray.attackRayBuffer.isNewRay) {
                             hitEntitySet.Clear();
                         }
                         // 중복 hit 처리
@@ -37,7 +48,7 @@ namespace Game.Ecs.System
                             if (!hitEntitySet.Contains(hit.Entity)) {
                                 // 데미지 처리
                                 StatusAspect statusAspect = SystemAPI.GetAspect<StatusAspect>(hit.Entity);
-                                statusAspect.AddBuffer(ray.attackPoint);
+                                statusAspect.AddBuffer(ray.attackRayBuffer.attackMagnification);
                                 hitEntitySet.Add(hit.Entity);
                             }
                         }

@@ -13,7 +13,5 @@ namespace Game.Data
         public static readonly int Skill_2 = Animator.StringToHash("Skill_2");
         public static readonly int Skill_3 = Animator.StringToHash("Skill_3");
         public static readonly int Die = Animator.StringToHash("Die");
-        
-
     }
 }
