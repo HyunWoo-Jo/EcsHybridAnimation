@@ -19,28 +19,46 @@ namespace Game.Ecs.AuthoringsAndMono
                 var entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
                 AddBuffer<AttackRayElement>(entity);
 
-
-                // AttackData 持失採
-                // Blob 持失
-                List<BlobAssetReference<BlobArray<RayData>>> rayDataBlob = new List<BlobAssetReference<BlobArray<RayData>>>();
-                // sub Blob
+                // init
+                var rayDataBlobBuilder = new BlobBuilder(Allocator.Temp);
+                var startIndexBlobBuilder = new BlobBuilder(Allocator.Temp);
+                var endIndexBlobBuilder = new BlobBuilder(Allocator.Temp);
+                ref var rayDataRoot = ref rayDataBlobBuilder.ConstructRoot<BlobArray<RayData>>();
+                ref var startIndexRoot = ref startIndexBlobBuilder.ConstructRoot<BlobArray<int>>();
+                ref var endIndexRoot = ref endIndexBlobBuilder.ConstructRoot<BlobArray<int>>();
+                // get size
+                int raySize = 0; // total rayDataSize
                 foreach(var dataList in authoring._attackRayDataList) {
-                    var subBuilder = new BlobBuilder(Allocator.Temp);
-                    ref var subRoot = ref subBuilder.ConstructRoot<BlobArray<RayData>>();
-                    var subBlobArray = subBuilder.Allocate(ref subRoot, dataList.rayDataList.Count);
-                    for(int i =0;i< dataList.rayDataList.Count; i++) {
-                        subBlobArray[i] = dataList.rayDataList[i];
+                    raySize += dataList.rayDataList.Count;
+                }
+                int indexSize = authoring._attackRayDataList.Count; // indexSize
+
+                var rayDataBlobArray = rayDataBlobBuilder.Allocate(ref rayDataRoot, raySize);
+                var startIndexBlobArray = startIndexBlobBuilder.Allocate(ref startIndexRoot, indexSize);
+                var endIndexBlobArray = endIndexBlobBuilder.Allocate(ref endIndexRoot, indexSize);
+                int rayCount = 0;
+                int indexCount = 0;
+                // allocate
+                foreach(var dataList in authoring._attackRayDataList) {
+                    startIndexBlobArray[indexCount] = rayCount;
+                    foreach(var rayData in dataList.rayDataList) {
+                        rayDataBlobArray[rayCount] = rayData;
+                        rayCount++;
                     }
-                    rayDataBlob.Add(subBuilder.CreateBlobAssetReference<BlobArray<RayData>>(Allocator.Persistent));
+                    endIndexBlobArray[indexCount] = rayCount;
+                    indexCount++;
                 }
-                // main Blob
-                var mainBuilder = new BlobBuilder(Allocator.Temp);
-                ref var mainRoot = ref mainBuilder.ConstructRoot<BlobArray<BlobAssetReference<BlobArray<RayData>>>>();
-                var mainBlobArray = mainBuilder.Allocate(ref mainRoot, authoring._attackRayDataList.Count);
-                for(int i = 0; i < mainBlobArray.Length; i++) {
-                    mainBlobArray[i] = rayDataBlob[i];
-                }
-                AddComponent(entity, new AttackRayBlobReference { blobRef = mainBuilder.CreateBlobAssetReference<RayBlob>(Allocator.Persistent) });
+                // create Blob and Add Component
+                AddComponent(entity, new AttackRayBlobReference {
+                    attackBlobRef = rayDataBlobBuilder.CreateBlobAssetReference<RayBlob>(Allocator.Persistent),
+                    startIndexBlobRef = startIndexBlobBuilder.CreateBlobAssetReference<IntBlob>(Allocator.Persistent),
+                    endIndexBlobRef = endIndexBlobBuilder.CreateBlobAssetReference<IntBlob>(Allocator.Persistent)
+                });
+                // Dipose
+                rayDataBlobBuilder.Dispose();
+                startIndexBlobBuilder.Dispose();
+                endIndexBlobBuilder.Dispose();
+
             }
         }
     }

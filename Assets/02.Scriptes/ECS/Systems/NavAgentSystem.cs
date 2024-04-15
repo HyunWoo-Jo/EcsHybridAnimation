@@ -8,7 +8,7 @@ using Unity.Collections;
 using Unity.Mathematics;
 using Unity.Transforms;
 using Game.Ecs.Aspect;
-
+using UnityEngine.AI;
 namespace Game.Ecs.System {
     /// <summary>
     /// Nav Agent 컨트롤 시스템
@@ -19,6 +19,7 @@ namespace Game.Ecs.System {
         private NavMeshQuery _navQuery;
         private float3 _extents;
         private int _maxPathSize;
+
 
         [BurstCompile]
         private void OnCreate(ref SystemState state) {
@@ -46,24 +47,19 @@ namespace Game.Ecs.System {
             _navQuery = new NavMeshQuery(NavMeshWorld.GetDefaultWorld(), Allocator.Persistent, 1000);
         }
 
-        [BurstCompile]
+        //[BurstCompile]
         private void FindPath(ref SystemState state, NavAgentAspect navAspect) {
             float3 startPosition = navAspect.Position;
             float3 endPosition = SystemAPI.GetComponentRO<LocalTransform>(navAspect.GetTargetEntity()).ValueRO.Position;
-            Debug.Log("End : "+endPosition);
             NavMeshLocation startLocation = _navQuery.MapLocation(startPosition, _extents, 0);
             NavMeshLocation endLocation = _navQuery.MapLocation(endPosition, _extents, 0);
          
             PathQueryStatus status;
             PathQueryStatus returningStatus;
-            Debug.Log(startLocation.position);
-            Debug.Log(endLocation.position);
             if (_navQuery.IsValid(startLocation) && _navQuery.IsValid(endLocation)) {
-                Debug.Log("-1");
                 status = _navQuery.BeginFindPath(startLocation, endLocation);
                 if (status == PathQueryStatus.InProgress) {
                     status = _navQuery.UpdateFindPath(_maxPathSize, out int iterationsPerformed);
-                    Debug.Log("0");
                 }
                 if (status == PathQueryStatus.Success) {
                     status = _navQuery.EndFindPath(out int pathSize);
@@ -97,19 +93,14 @@ namespace Game.Ecs.System {
                             }
                         }
                         navAspect.FindedNavAgent();
-                        Debug.Log("1");
                     }
-                    Debug.Log("2");
                     straightPathFlags.Dispose();
                     polygonIds.Dispose();
                     vertexSize.Dispose();
                 }
             }
-            
-            Debug.Log("3");
         }
         private void Move(NavAgentAspect navAspect, float deltaTime) {
-            Debug.Log("00");
             float3 position = navAspect.Position;
             float3 currentWayPosition = navAspect.GetCurrentWaypointPosition();
             position.y = 0f;
@@ -120,11 +111,9 @@ namespace Game.Ecs.System {
                 }
                 currentWayPosition = navAspect.GetCurrentWaypointPosition();
             }
-            Debug.Log("01");
             navAspect.SetTragetPosition(currentWayPosition);
             float3 direction = currentWayPosition - position;
             if (direction.x == 0f && direction.z == 0f) return;
-            Debug.Log("02");
             navAspect.IsTurnStop = false;
             // 이동
             navAspect.Position += math.normalize(direction) * navAspect.GetMoveSpeed() * deltaTime;

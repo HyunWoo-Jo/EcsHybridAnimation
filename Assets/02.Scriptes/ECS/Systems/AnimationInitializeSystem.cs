@@ -25,7 +25,7 @@ namespace Game.Ecs.System
 
             foreach (var (animRef, entity) in SystemAPI.Query<AnimGameObjectReference>().WithNone<AnimationReference>().WithEntityAccess()) {
                 // »ý¼º
-                GameObject obj = HybridObjectManager.Instance.InstantiateObject(animRef.prefab);          
+                GameObject obj = HybridObjectManager.Instance.InstantiateObject(animRef.prefab);
                 ecb.AddComponent(entity, new AnimationReference {
                     animator = obj.GetComponent<Animator>(),
                     transform = obj.GetComponent<Transform>()

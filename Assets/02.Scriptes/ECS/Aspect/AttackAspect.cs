@@ -42,11 +42,12 @@ namespace Game.Ecs.Aspect
         public void Attack(int value) {
             _animationProperties.ValueRW.attack = value;
 
-            for(int i = 0; i < _attackRayBlobRef.ValueRO.blobRef.Value.attackBlobTwoArray[value].Value.Length; i++) {
-                AddBuffer(new AttackRayElement { attackRayBuffer = _attackRayBlobRef.ValueRO.blobRef.Value.attackBlobTwoArray[value].Value[i] });
+            int index = _attackRayBlobRef.ValueRO.startIndexBlobRef.Value.intBlob[value];
+            int endIndex = _attackRayBlobRef.ValueRO.endIndexBlobRef.Value.intBlob[value];
+            for (; index < endIndex; index++) {
+                AddBuffer(new AttackRayElement { attackRayBuffer = _attackRayBlobRef.ValueRO.attackBlobRef.Value.attackBlob[index] });
             }
         }
-        
-       
+      
     }
 }

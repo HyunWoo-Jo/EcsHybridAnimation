@@ -8,7 +8,9 @@ namespace Game.Ecs.Aspect
 {
     public readonly partial struct PlayerAspect : IAspect
     {
+#pragma warning disable CS0414 // warning Á¦°Å
         private readonly RefRO<PlayerTag> _playerTag;
+#pragma warning restore
         private readonly RefRW<NavAgentProperties> _navAgentPropert;
         private readonly RefRW<AnimationProperties> _animationProperties;
         private readonly RefRW<RotationProperties> _rotationProperties;

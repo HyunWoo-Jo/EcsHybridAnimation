@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Game.Utils;
 
 namespace Game.Mono
@@ -24,7 +25,6 @@ namespace Game.Mono
 
         public GameObject InstantiateObject(GameObject gameObj) {
             var obj = Object.Instantiate(gameObj);
-            Debug.Log("?");
             _instantiatedList.Add(obj);
             return obj;
         }
