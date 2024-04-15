@@ -14,6 +14,10 @@ namespace Game.Ecs.Aspect
         private readonly DynamicBuffer<WaypointBuffer> _waypointBuffer;
         private readonly RefRW<RotationProperties> _rotationProperties;
 
+        public float GetDebug() {
+            return _navAgentProperties.ValueRO.moveSpeed;
+        }
+
         public float3 Position {
             get { return _localTransform.ValueRO.Position; }
             set { _localTransform.ValueRW.Position = value; }
@@ -63,11 +67,16 @@ namespace Game.Ecs.Aspect
         public float3 GetCurrentWaypointPosition() {
             return _waypointBuffer[_navAgentProperties.ValueRO.curretWaypoint].waypoint * new float3(1,0,1);
         }
-        public void NextWaypoint() {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool NextWaypoint() {
             if(_navAgentProperties.ValueRO.curretWaypoint + 1 < _waypointBuffer.Length) {
                 _navAgentProperties.ValueRW.curretWaypoint++;
+                return false;
             } else {
-                if(IsFinded) _navAgentProperties.ValueRW.isStop = true;
+                return true;
             }
         }
             

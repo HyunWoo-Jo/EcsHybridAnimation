@@ -24,6 +24,7 @@ namespace Game.Mono
 
         public GameObject InstantiateObject(GameObject gameObj) {
             var obj = Object.Instantiate(gameObj);
+            Debug.Log("?");
             _instantiatedList.Add(obj);
             return obj;
         }

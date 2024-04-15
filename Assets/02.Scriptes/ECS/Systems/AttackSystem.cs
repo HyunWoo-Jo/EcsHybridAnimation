@@ -36,7 +36,6 @@ namespace Game.Ecs.System
                     };
 
 #if UNITY_EDITOR
-                    Debug.Log(rayInput.End);
                     Debug.DrawRay(rayInput.Start, rayInput.End, Color.green, 1f);
 #endif
                     if (physicsWorld.CastRay(rayInput, ref hitList)) {
@@ -57,6 +56,7 @@ namespace Game.Ecs.System
                 }
                 hitList.Dispose();
                 hitEntitySet.Dispose();
+                attackAspect.ClearBuffer();
             }
             
 

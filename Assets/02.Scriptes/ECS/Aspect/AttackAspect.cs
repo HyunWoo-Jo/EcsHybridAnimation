@@ -25,6 +25,8 @@ namespace Game.Ecs.Aspect
         public void ClearBuffer() {
             _attackBuffer.Clear();
         }
+
+        
         public int GetAttackAnimationCount() {
             return _animationProperties.ValueRO.attack;
         }

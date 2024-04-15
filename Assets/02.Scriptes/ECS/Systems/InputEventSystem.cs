@@ -25,7 +25,6 @@ namespace Game.Ecs.System
         private Action _leftClick_listener;
         private Action _rightClick_listener;
 
-        private int attackCount = -1;
         private bool _isLeftClick;
         private bool _isRightClick;
 
@@ -92,7 +91,6 @@ namespace Game.Ecs.System
                         int attackCount = attackAspect.GetAttackAnimationCount();
                         if (attackCount == -1) {
                             playerAspect.SetStop(false);
-                            playerAspect.SetPathFinded(false);
                         }
                     }
                 }
