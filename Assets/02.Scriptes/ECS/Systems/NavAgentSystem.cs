@@ -23,7 +23,7 @@ namespace Game.Ecs.System {
 
         [BurstCompile]
         private void OnCreate(ref SystemState state) {
-            CreateNavMesh();
+            _navQuery = new NavMeshQuery(NavMeshWorld.GetDefaultWorld(), Allocator.Persistent, 1000);
             _extents = new float3(1, 1, 1);
             _maxPathSize = 100;
         }
@@ -35,7 +35,7 @@ namespace Game.Ecs.System {
         private void OnUpdate(ref SystemState state) {
             float deltaTime = SystemAPI.Time.DeltaTime;
             foreach (var navAspect in SystemAPI.Query<NavAgentAspect>()) {
-                if (!World.DefaultGameObjectInjectionWorld.EntityManager.Exists(navAspect.GetTargetEntity())) continue;
+                if (!state.EntityManager.Exists(navAspect.GetTargetEntity())) continue;
                 FindPath(ref state, navAspect);
                 if (navAspect.IsStop) continue;
                 if (navAspect.IsFinded) {
@@ -43,12 +43,7 @@ namespace Game.Ecs.System {
                 }
             }
         }
-
-        private void CreateNavMesh() {
-            _navQuery = new NavMeshQuery(NavMeshWorld.GetDefaultWorld(), Allocator.Persistent, 1000);
-        }
-
-        //[BurstCompile]
+        [BurstCompile]
         private void FindPath(ref SystemState state, NavAgentAspect navAspect) {
             float3 startPosition = navAspect.Position;
             float3 endPosition = SystemAPI.GetComponentRO<LocalTransform>(navAspect.GetTargetEntity()).ValueRO.Position;
