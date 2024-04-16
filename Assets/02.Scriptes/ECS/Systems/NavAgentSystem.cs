@@ -35,8 +35,9 @@ namespace Game.Ecs.System {
         private void OnUpdate(ref SystemState state) {
             float deltaTime = SystemAPI.Time.DeltaTime;
             foreach (var navAspect in SystemAPI.Query<NavAgentAspect>()) {
+                if (!World.DefaultGameObjectInjectionWorld.EntityManager.Exists(navAspect.GetTargetEntity())) continue;
                 FindPath(ref state, navAspect);
-                if (navAspect.IsStop) return;
+                if (navAspect.IsStop) continue;
                 if (navAspect.IsFinded) {
                     Move(navAspect, deltaTime);
                 }
