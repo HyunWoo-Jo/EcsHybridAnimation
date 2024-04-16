@@ -36,10 +36,10 @@ namespace Game.Ecs.System {
             float deltaTime = SystemAPI.Time.DeltaTime;
             foreach (var navAspect in SystemAPI.Query<NavAgentAspect>()) {
                 if (!state.EntityManager.Exists(navAspect.GetTargetEntity())) continue;
-                FindPath(ref state, navAspect);
                 if (navAspect.IsStop) continue;
+                FindPath(ref state, navAspect);
                 if (navAspect.IsFinded) {
-                    Move(navAspect, deltaTime);
+                    MoveDirction(navAspect);
                 }
             }
         }
@@ -96,13 +96,13 @@ namespace Game.Ecs.System {
                 }
             }
         }
-        private void Move(NavAgentAspect navAspect, float deltaTime) {
+        private void MoveDirction(NavAgentAspect navAspect) {
             float3 position = navAspect.Position;
             float3 currentWayPosition = navAspect.GetCurrentWaypointPosition();
             position.y = 0f;
-            while(math.distance(position, currentWayPosition) < navAspect.GetTraceRange()) {
+            while(math.distance(position, currentWayPosition) < navAspect.TraceRange) {
                 if (navAspect.NextWaypoint()) {
-                    navAspect.IsStop = true;
+                    navAspect.IsMoveStop = true;
                     break;
                 }
                 currentWayPosition = navAspect.GetCurrentWaypointPosition();
@@ -112,7 +112,8 @@ namespace Game.Ecs.System {
             if (direction.x == 0f && direction.z == 0f) return;
             navAspect.IsTurnStop = false;
             // ÀÌµ¿
-            navAspect.Position += math.normalize(direction) * navAspect.GetMoveSpeed() * deltaTime;
+
+            navAspect.Dirction = math.normalize(direction);
         }
     }
 }

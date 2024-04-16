@@ -145,6 +145,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e89ce102e8348fc418bd6a3509b7a269, type: 2}
   - {fileID: 11400000, guid: df92718207fe5b5479b25892c062ae12, type: 2}
   _skillRayDataList: []
+--- !u!4 &205981145 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1631876998232914761, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+  m_PrefabInstance: {fileID: 3725117775652703482}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &376682015
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +745,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_bear
       objectReference: {fileID: 0}
+    - target: {fileID: 420755981720162872, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 696282867823282600, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -748,13 +757,25 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2368992063544678501, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: _moveSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368992063544678501, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: _traceRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368992063544678501, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: _targetTransform
+      value: 
+      objectReference: {fileID: 205981145}
     - target: {fileID: 3056592305437050842, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.36
+      value: 39.07
       objectReference: {fileID: 0}
     - target: {fileID: 3056592305437050842, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.86
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 3056592305437050842, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       propertyPath: m_LocalPosition.z
@@ -787,6 +808,66 @@ PrefabInstance:
     - target: {fileID: 3056592305437050842, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779215751088864002, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8051226084899053674, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_Mass
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 8051226084899053674, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_Smoothing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8051226084899053674, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_LinearDamping
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8051226084899053674, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_AngularDamping
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097628734384196160, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: _maxSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097628734384196160, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: _accelerateSpeed
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 9207807666062759485, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_SphereRadius
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9207807666062759485, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_Capsule.Radius
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9207807666062759485, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_Cylinder.Radius
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9207807666062759485, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_PrimitiveSize.x
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9207807666062759485, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_PrimitiveSize.y
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9207807666062759485, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_PrimitiveCenter.y
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9207807666062759485, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_Material.m_Friction.m_Value.Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9207807666062759485, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_Material.m_Restitution.m_Value.Value
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -855,9 +936,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 100648870213358085, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: _moveSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 100648870213358085, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: _traceRange
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100648870213358085, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
       propertyPath: _targetTransform
       value: 
       objectReference: {fileID: 376682016}
+    - target: {fileID: 1350513521037311383, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: _maxSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350513521037311383, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: _accelerateSpeed
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 1605669694981655474, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -914,6 +1011,38 @@ PrefabInstance:
       propertyPath: _animatorModel_prefab
       value: 
       objectReference: {fileID: 2113289097230355999, guid: e7d530c1570b1104689f8fc11532bf58, type: 3}
+    - target: {fileID: 6453535809661923115, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: m_ForceUnique
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453535809661923115, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: m_Material.m_Friction.m_Value.Value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453535809661923115, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: m_Material.m_CollisionResponse.m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453535809661923115, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: m_Material.m_Restitution.m_Value.Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453535809661923115, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: m_Material.m_Friction.m_Value.CombineMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6793377016724573681, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: m_Mass
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6793377016724573681, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: m_LinearDamping
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6793377016724573681, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: m_AngularDamping
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 9064295704364095909, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
       propertyPath: _hp
       value: 100

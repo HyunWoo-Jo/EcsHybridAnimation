@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using Unity.Physics;
 using Game.Ecs.ComponentAndTag;
 namespace Game.Ecs.Aspect
 {
@@ -13,10 +14,8 @@ namespace Game.Ecs.Aspect
         private readonly RefRW<NavAgentProperties> _navAgentProperties;
         private readonly DynamicBuffer<WaypointBuffer> _waypointBuffer;
         private readonly RefRW<RotationProperties> _rotationProperties;
+        private readonly RefRW<MoveProperties> _moveProperties;
 
-        public float GetDebug() {
-            return _navAgentProperties.ValueRO.moveSpeed;
-        }
 
         public float3 Position {
             get { return _localTransform.ValueRO.Position; }
@@ -26,27 +25,38 @@ namespace Game.Ecs.Aspect
             get { return _localTransform.ValueRO.Rotation; }
             set { _localTransform.ValueRW.Rotation = value; }
         }
+        /// <summary>
+        /// 검색 정지
+        /// </summary>
         public bool IsStop {
             get { return _navAgentProperties.ValueRO.isStop; }
             set { _navAgentProperties.ValueRW.isStop = value; }
         }
+        /// <summary>
+        /// 이동 정지
+        /// </summary>
+        public bool IsMoveStop {
+            get { return _moveProperties.ValueRO.isStop; }
+            set { _moveProperties.ValueRW.isStop = value; }
+        }
+
 
         public bool IsFinded {
             get { return _navAgentProperties.ValueRO.isPathFinded; }
             set { _navAgentProperties.ValueRW.isPathFinded = value; }
         }
 
+        public float3 Dirction {
+            set { _moveProperties.ValueRW.direction = value; }
+        }
+
         public Entity GetTargetEntity() {
             return _navAgentProperties.ValueRO.targetEntity;
         }
 
-        
-        public float GetMoveSpeed() {
-            return _navAgentProperties.ValueRO.moveSpeed;
-        }
-        
-        public float GetTraceRange() {
-            return _navAgentProperties.ValueRO.traceRange;
+       
+        public float TraceRange {
+            get { return _navAgentProperties.ValueRO.traceRange; }
         }
 
         /// <summary>

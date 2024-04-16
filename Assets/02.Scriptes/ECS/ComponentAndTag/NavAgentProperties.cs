@@ -16,7 +16,6 @@ namespace Game.Ecs.ComponentAndTag
         public bool isPathFinded;
         public bool isStop;
         public int curretWaypoint;
-        public float moveSpeed;
         public float traceRange;
     }
 
