@@ -30,11 +30,16 @@ namespace Game.Ecs.System
                 // attack 모션이 끝나면 초기화
                 int currentAnimationHash = animRef.animator.GetCurrentAnimatorStateInfo(0).tagHash;
                 int nextAnimationHash = animRef.animator.GetNextAnimatorStateInfo(0).tagHash;
-                if (animPro.ValueRO.attack >= 0 && animRef.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && !(nextAnimationHash == AnimationHash.Attack)) {
+
+                // Animation Properties에 animtionState 저장
+                animPro.ValueRW.currentAnimationTagHash = currentAnimationHash;
+                animPro.ValueRW.currentAnimationNormalizedTime = animRef.animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+                if (animPro.ValueRO.attack >= 0 && animPro.ValueRO.currentAnimationNormalizedTime > 0.9f && !(nextAnimationHash == AnimationHash.Attack)) {
                     animPro.ValueRW.attack = -2;
                 }
                 // animation 1번만 실행 되도록 설정
-                if (animPro.ValueRW.attack == -2 && (currentAnimationHash == AnimationHash.Idle || currentAnimationHash == AnimationHash.Walk)) {
+                if (animPro.ValueRW.attack == -2 && (currentAnimationHash == AnimationHash.Idle || currentAnimationHash == AnimationHash.Walk) && !(nextAnimationHash == AnimationHash.Attack)) {
                     animPro.ValueRW.attack = -1;
                 }
 

@@ -17,13 +17,16 @@ namespace Game.Ecs.ComponentAndTag
     }
 
     public partial struct AnimationProperties : IComponentData {
+        public int currentAnimationTagHash;
+        public float currentAnimationNormalizedTime;
+
         public int attack;
-        public int preAttack;
+        public int preAttack;// 트리거를 한번씩만 전달하기 위해 사용
         public bool isContinueousAttack;
 
         public int triggerHash;
         public bool isTrigger;
         public bool isMove;
-        public bool preMove;
+        public bool preMove; // 트리거를 한번씩만 전달하기 위해 사용
     }
 }

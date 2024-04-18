@@ -7,7 +7,7 @@ using Unity.Physics;
 using Unity.Physics.Systems;
 using Unity.Mathematics;
 using Unity.Transforms;
-using Game.Utils;
+using Game.Data;
 using Game.Ecs.ComponentAndTag;
 using Game.Ecs.Aspect;
 using System;
@@ -28,7 +28,7 @@ namespace Game.Ecs.System
         private bool _isLeftClick;
         private bool _isRightClick;
 
-        
+          [BurstCompile]
         protected override void OnCreate() {
             base.OnCreate();
             _mainCamera = Camera.main;
@@ -42,6 +42,7 @@ namespace Game.Ecs.System
         protected override void OnDestroy() {
             base.OnDestroy();
         }
+        [BurstCompile]
         protected override void OnUpdate() {
             // right Click
             if (Input.GetMouseButton(1)) {
@@ -67,6 +68,7 @@ namespace Game.Ecs.System
         /// <summary>
         /// 클릭 이동 
         /// </summary>
+        [BurstCompile]
         private void MoveClick() {
             _physicsWorld = SystemAPI.GetSingletonRW<PhysicsWorldSingleton>().ValueRW.PhysicsWorld;
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -99,6 +101,7 @@ namespace Game.Ecs.System
         /// <summary>
         /// 클릭 공격
         /// </summary>
+        [BurstCompile]
         private void AttackClick() {
             _physicsWorld = SystemAPI.GetSingletonRW<PhysicsWorldSingleton>().ValueRW.PhysicsWorld;
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -106,7 +109,7 @@ namespace Game.Ecs.System
             var rayEnd = ray.GetPoint(300f);
             var raycastInput = new RaycastInput {
                 Start = rayStart,
-                End = rayEnd,
+                End = rayStart + rayEnd,
                 Filter = new CollisionFilter {
                     GroupIndex = 0,
                     BelongsTo = (uint)LayerName.Ground,
@@ -122,13 +125,14 @@ namespace Game.Ecs.System
                     playerAspect.SetStop(true);
                     int attackCount = attackAspect.GetAttackAnimationCount();
                     if(attackCount == -1) {
-                        attackAspect.Attack(0);
+                        attackAspect.SetAttackAnimation(0);
                        
                     }
                     playerAspect.SetTargetPosition(raycastHit.Position);
                 }
             }
         }
+        [BurstCompile]
         // 공격 버튼이 계속해서 눌려있나 확인 후 계속해서 눌러져있으면 연속 공격 실행
         private void ContinueousAttack() {
             foreach (var (animRef, playerAspect, attackAspect) in SystemAPI.Query<AnimationReference, PlayerAspect, AttackAspect>().WithAll<PlayerTag>()) {
@@ -138,7 +142,8 @@ namespace Game.Ecs.System
                         if(animRef.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7) { // 모션 70 이상 89 이하 상태에서
                             if(_isRightClick) { // 오른쪽 클릭이 되어있으면
                                 playerAspect.IsContinueousAttack = true;
-                                attackAspect.Attack(attackCount + 1);
+                                
+                                attackAspect.SetAttackAnimation(attackCount + 1);
                             }
                         } else {// 모션 70 이하 일 경우
                             playerAspect.IsContinueousAttack = false;

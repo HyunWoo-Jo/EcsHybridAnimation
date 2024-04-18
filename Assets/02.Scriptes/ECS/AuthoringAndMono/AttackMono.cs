@@ -19,6 +19,10 @@ namespace Game.Ecs.AuthoringsAndMono
                 var entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
                 AddBuffer<AttackRayElement>(entity);
 
+                AddComponent(entity, new AttackProperties { isAttackAble = true });
+
+
+                //// Attack Data Blob »ý¼º
                 // init
                 var rayDataBlobBuilder = new BlobBuilder(Allocator.Temp);
                 var startIndexBlobBuilder = new BlobBuilder(Allocator.Temp);

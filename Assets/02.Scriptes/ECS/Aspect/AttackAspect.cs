@@ -14,6 +14,13 @@ namespace Game.Ecs.Aspect
         private readonly RefRW<AnimationProperties> _animationProperties;
         private readonly RefRW<StatusProperties> _statusProperties;
         private readonly RefRO<AttackRayBlobReference> _attackRayBlobRef;
+        private readonly RefRW<AttackProperties> _attackProperties;
+
+        public bool IsAttackAble {
+            get { return _attackProperties.ValueRO.isAttackAble; }
+            set { _attackProperties.ValueRW.isAttackAble = value; }
+        }
+       
         public DynamicBuffer<AttackRayElement> GetRays() {
             return _attackBuffer;
         }
@@ -26,6 +33,9 @@ namespace Game.Ecs.Aspect
             _attackBuffer.Clear();
         }
 
+        public float GetAggressiveStrength() {
+            return _statusProperties.ValueRO.aggressiveStrength;
+        }
         
         public int GetAttackAnimationCount() {
             return _animationProperties.ValueRO.attack;
@@ -39,9 +49,17 @@ namespace Game.Ecs.Aspect
             return _localTransform.ValueRO.TransformDirection(direciton);
         }
 
-        public void Attack(int value) {
+        public void SetAttackAnimation(int value) {
             _animationProperties.ValueRW.attack = value;
+        }
+        public float GetCurrentAnimationNormalizedTime() {
+            return _animationProperties.ValueRO.currentAnimationNormalizedTime;
+        }
+        public int GetCurrentAnimationTagHash() {
+            return _animationProperties.ValueRO.currentAnimationTagHash;
+        }
 
+        public void Attack(int value) {
             int index = _attackRayBlobRef.ValueRO.startIndexBlobRef.Value.intBlob[value];
             int endIndex = _attackRayBlobRef.ValueRO.endIndexBlobRef.Value.intBlob[value];
             for (; index < endIndex; index++) {

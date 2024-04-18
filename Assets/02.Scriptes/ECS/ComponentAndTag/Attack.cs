@@ -11,6 +11,10 @@ using Unity.Collections;
 namespace Game.Ecs.ComponentAndTag
 {
 
+
+    public partial struct AttackProperties : IComponentData {
+        public bool isAttackAble;
+    }
     public partial struct AttackRayElement : IBufferElementData {
         public RayData attackRayBuffer;
     }
