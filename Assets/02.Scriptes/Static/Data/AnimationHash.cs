@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Unity.Burst;
 namespace Game.Data
 {
     public static class AnimationHash {

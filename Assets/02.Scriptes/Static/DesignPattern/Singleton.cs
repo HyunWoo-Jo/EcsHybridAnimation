@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Utils {
+
+namespace Game.DesignPattern{
     public class Singleton<T> : MonoBehaviour {
         protected static T _instance;
         public static T Instance {

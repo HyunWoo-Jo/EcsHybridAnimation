@@ -14,8 +14,9 @@ namespace Game.Ecs.System
     [BurstCompile]
     public partial struct AttackSystem : ISystem
     {
+        private int _attackHash;
         void OnCreate(ref SystemState state) {
-
+            _attackHash = AnimationHash.Attack;
         }
         void OnDestroy(ref SystemState state) {
 
@@ -28,9 +29,9 @@ namespace Game.Ecs.System
                 // Animation중에 공격이 진행되도록 처리
                 int animationTagHash = attackAspect.GetCurrentAnimationTagHash();
                 float normalizedTime = attackAspect.GetCurrentAnimationNormalizedTime();
-                if (animationTagHash == AnimationHash.Attack && normalizedTime > 0.9f) {
+                if (animationTagHash == _attackHash && normalizedTime > 0.9f) {
                     attackAspect.IsAttackAble = true;
-                } else if(animationTagHash == AnimationHash.Attack && normalizedTime > 0.4f && attackAspect.IsAttackAble) {
+                } else if(animationTagHash == _attackHash && normalizedTime > 0.4f && attackAspect.IsAttackAble) {
                     attackAspect.IsAttackAble = false;
                     attackAspect.Attack(attackAspect.GetAttackAnimationCount());
                 }
@@ -87,7 +88,6 @@ namespace Game.Ecs.System
                 hitEntitySet.Dispose();
                 attackAspect.ClearBuffer();
             }
-            
 
         }
 

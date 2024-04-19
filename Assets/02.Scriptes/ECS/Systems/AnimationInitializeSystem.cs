@@ -20,6 +20,7 @@ namespace Game.Ecs.System
         void OnDestroy(ref SystemState state) {
 
         }
+        
         void OnUpdate(ref SystemState state) {
             var ecb = new EntityCommandBuffer(Unity.Collections.Allocator.Temp, PlaybackPolicy.SinglePlayback);
 
