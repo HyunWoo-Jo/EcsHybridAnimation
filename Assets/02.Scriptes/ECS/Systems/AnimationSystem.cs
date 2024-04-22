@@ -6,6 +6,7 @@ using Unity.Burst;
 using Game.Ecs.ComponentAndTag;
 using Unity.Transforms;
 using Game.Data;
+using Game.Ecs.Aspect;
 namespace Game.Ecs.System
 {   
     /// <summary>
@@ -58,11 +59,23 @@ namespace Game.Ecs.System
                     animPro.ValueRW.isTrigger = false;
                     animRef.animator.SetTrigger(animPro.ValueRO.triggerHash);
                 }
-
             }
 
+            new WalkAnimationJob { }.ScheduleParallel();
 
+        }
 
+        // ¿Ãµø animation
+        [BurstCompile]
+        private partial struct WalkAnimationJob : IJobEntity {
+            [BurstCompile]
+            private void Execute(NavAgentAspect navAspect, RefRW<AnimationProperties> animPro, WalkAnimationTag tag) {
+                if (navAspect.GetIsStop()) {
+                    animPro.ValueRW.isMove = false;
+                } else {
+                    animPro.ValueRW.isMove = true;
+                }
+            }
         }
     }
 }
