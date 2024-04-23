@@ -413,7 +413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f35a710567762c409f5fe728c2f0351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRayDataList: []
+  _attackRayDataList:
+  - {fileID: 11400000, guid: 5ce4389fa3f53844aa5a89f86c163a9a, type: 2}
   _skillRayDataList: []
 --- !u!114 &1931525086
 MonoBehaviour:
@@ -425,6 +426,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4069e4ddca334f449bdc064e2e4c29e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1931525087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931525069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c33d1b27a262cbd429ce08aefab03ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackRange: 4.2
+  _attackDelayTime: 2
+  _attackTargetObject: {fileID: 205981112}
+--- !u!114 &1931525088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931525069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9906c4df55a24c44aa801899b286cf99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &30366354767299767
@@ -923,7 +951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2368992063544678501, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       propertyPath: _traceRange
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2368992063544678501, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       propertyPath: _targetTransform
@@ -1052,6 +1080,10 @@ PrefabInstance:
     - target: {fileID: 3474620381196173797, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 32.2521
+      objectReference: {fileID: 0}
+    - target: {fileID: 3879901347724708953, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: _rotationSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4457562354452763555, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1315,7 +1347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9097628734384196160, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       propertyPath: _accelerateSpeed
-      value: 70
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 9101515286559140409, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1507,6 +1539,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 420755981720162872, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1931525077}
+    - targetCorrespondingSourceObject: {fileID: 420755981720162872, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1931525087}
+    - targetCorrespondingSourceObject: {fileID: 420755981720162872, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1931525088}
   m_SourcePrefab: {fileID: 100100000, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
 --- !u!1 &3622872125539339900
 GameObject:

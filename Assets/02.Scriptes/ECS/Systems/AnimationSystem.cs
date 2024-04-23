@@ -36,7 +36,7 @@ namespace Game.Ecs.System
                 animPro.ValueRW.currentAnimationTagHash = currentAnimationHash;
                 animPro.ValueRW.currentAnimationNormalizedTime = animRef.animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-                if (animPro.ValueRO.attack >= 0 && animPro.ValueRO.currentAnimationNormalizedTime > 0.9f && !(nextAnimationHash == AnimationHash.Attack)) {
+                if (animPro.ValueRO.preAttack >= 0 && animPro.ValueRO.currentAnimationNormalizedTime > 0.9f && !(nextAnimationHash == AnimationHash.Attack)) {
                     animPro.ValueRW.attack = -2;
                 }
                 // animation 1번만 실행 되도록 설정
@@ -62,6 +62,7 @@ namespace Game.Ecs.System
             }
 
             new WalkAnimationJob { }.ScheduleParallel();
+            
 
         }
 

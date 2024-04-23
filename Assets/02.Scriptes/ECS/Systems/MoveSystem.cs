@@ -29,6 +29,7 @@ namespace Game.Ecs.System
                 float3 acc = moveAsepct.Direction * deltaTime * moveAsepct.AccelerateSpeed;
                 float3 moveValue = moveAsepct.Velocity + acc;
                 moveAsepct.Velocity = new float3(math.min(moveValue.x, moveAsepct.MaxSpeed), moveValue.y, math.min(moveValue.z, moveAsepct.MaxSpeed));
+
             }
         }
     }

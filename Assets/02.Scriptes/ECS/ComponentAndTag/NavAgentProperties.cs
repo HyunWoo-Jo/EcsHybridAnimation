@@ -11,7 +11,6 @@ namespace Game.Ecs.ComponentAndTag
     /// </summary>
     public partial struct NavAgentProperties : IComponentData
     {
-        public Entity entity;
         public Entity targetEntity;
         public bool isPathFinded;
         public bool isStop;

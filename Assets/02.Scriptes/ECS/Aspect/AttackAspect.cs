@@ -9,7 +9,7 @@ namespace Game.Ecs.Aspect
 {
     public readonly partial struct AttackAspect : IAspect
     {
-        private readonly RefRO<LocalTransform> _localTransform;
+        public readonly Entity entity;
         private readonly DynamicBuffer<AttackRayElement> _attackBuffer;
         private readonly RefRW<AnimationProperties> _animationProperties;
         private readonly RefRW<StatusProperties> _statusProperties;
@@ -41,13 +41,6 @@ namespace Game.Ecs.Aspect
             return _animationProperties.ValueRO.attack;
         }
 
-        public float3 LocalToGlobal(float3 childPosition) {
-            return _localTransform.ValueRO.TransformPoint(childPosition);
-        }
-
-        public float3 TransformDirection(float3 direciton) {
-            return _localTransform.ValueRO.TransformDirection(direciton);
-        }
 
         public void SetAttackAnimation(int value) {
             _animationProperties.ValueRW.attack = value;

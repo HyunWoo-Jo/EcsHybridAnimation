@@ -88,11 +88,12 @@ namespace Game.Ecs.System
 #endif
             if (_physicsWorld.CastRay(raycastInput, out var raycastHit)) {
                 foreach (var clickProperties in SystemAPI.Query<InputEventProperties>()) {
-                    foreach (var (playerAspect, attackAspect) in SystemAPI.Query<PlayerAspect, AttackAspect>().WithAll<PlayerTag>()) {
+                    foreach (var (navAspect, attackAspect) in SystemAPI.Query<NavAgentAspect, AttackAspect>().WithAll<PlayerTag>()) {
                         SystemAPI.GetComponentRW<LocalTransform>(clickProperties.clickMovePointEntity).ValueRW.Position = raycastHit.Position;
                         int attackCount = attackAspect.GetAttackAnimationCount();
                         if (attackCount == -1) {
-                            playerAspect.SetStop(false);
+                            navAspect.IsStop = false;
+                            navAspect.IsMoveStop = false;
                         }
                     }
                 }
@@ -120,15 +121,15 @@ namespace Game.Ecs.System
             Debug.DrawRay(rayStart, rayEnd, Color.blue, 1f);
 #endif
             if (_physicsWorld.CastRay(raycastInput, out var raycastHit)) {
-                foreach (var (playerAspect, attackAspect) in SystemAPI.Query<PlayerAspect, AttackAspect>().WithAll<PlayerTag>()) {
-                    
-                    playerAspect.SetStop(true);
+                foreach (var (navAspect, attackAspect) in SystemAPI.Query<NavAgentAspect, AttackAspect>().WithAll<PlayerTag>()) {
+                    navAspect.IsStop = true;
+                    navAspect.IsMoveStop = true;
                     int attackCount = attackAspect.GetAttackAnimationCount();
                     if(attackCount == -1) {
                         attackAspect.SetAttackAnimation(0);
                        
                     }
-                    playerAspect.SetTargetPosition(raycastHit.Position);
+                    navAspect.TurnTargetPosition = raycastHit.Position;
                 }
             }
         }

@@ -16,12 +16,16 @@ namespace Game.Ecs.Aspect
         private readonly RefRW<RotationProperties> _rotationProperties;
         private readonly RefRW<MoveProperties> _moveProperties;
 
+
         public bool GetIsStop() {
             return _navAgentProperties.ValueRO.isStop || !_navAgentProperties.ValueRO.isPathFinded || _moveProperties.ValueRO.isStop;
         }
         public float3 Position {
             get { return _localTransform.ValueRO.Position; }
             set { _localTransform.ValueRW.Position = value; }
+        }
+        public float3 GetPosition() {
+            return _localTransform.ValueRO.Position;
         }
         public quaternion Rotation {
             get { return _localTransform.ValueRO.Rotation; }
@@ -50,6 +54,10 @@ namespace Game.Ecs.Aspect
 
         public float3 Dirction {
             set { _moveProperties.ValueRW.direction = value; }
+        }
+
+        public float3 TurnTargetPosition {
+            set { _rotationProperties.ValueRW.targetPosition = value; }
         }
 
         public Entity GetTargetEntity() {

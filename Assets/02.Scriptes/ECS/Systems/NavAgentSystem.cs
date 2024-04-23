@@ -20,7 +20,6 @@ namespace Game.Ecs.System {
         private float3 _extents;
         private int _maxPathSize;
 
-
         [BurstCompile]
         private void OnCreate(ref SystemState state) {
             _navQuery = new NavMeshQuery(NavMeshWorld.GetDefaultWorld(), Allocator.Persistent, 1000);

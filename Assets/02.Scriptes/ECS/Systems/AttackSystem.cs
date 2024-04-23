@@ -9,6 +9,7 @@ using Game.Ecs.ComponentAndTag;
 using Game.Ecs.Aspect;
 using Unity.Mathematics;
 using Game.Data;
+using Unity.Transforms;
 namespace Game.Ecs.System
 {
     [BurstCompile]
@@ -24,7 +25,6 @@ namespace Game.Ecs.System
         [BurstCompile]
         void OnUpdate(ref SystemState state) {
             PhysicsWorld physicsWorld = SystemAPI.GetSingletonRW<PhysicsWorldSingleton>().ValueRW.PhysicsWorld;
-           
             foreach (var attackAspect in SystemAPI.Query<AttackAspect>()) {
                 // Animation중에 공격이 진행되도록 처리
                 int animationTagHash = attackAspect.GetCurrentAnimationTagHash();
@@ -42,8 +42,10 @@ namespace Game.Ecs.System
                 // Ray 처리
                 NativeList<Unity.Physics.RaycastHit> hitList = new NativeList<Unity.Physics.RaycastHit>(Allocator.Temp);
                 NativeHashSet<Entity> hitEntitySet = new NativeHashSet<Entity>(10, Allocator.Temp);
+                RefRO<LocalTransform> localTransform = SystemAPI.GetComponentRO<LocalTransform>(attackAspect.entity);
                 foreach (var ray in attackAspect.GetRays()) {
-                    float3 start = attackAspect.LocalToGlobal(ray.attackRayBuffer.rayStart);
+                    
+                    float3 start = localTransform.ValueRO.TransformPoint(ray.attackRayBuffer.rayStart); // local To global
                     // rayDataElement 형식으로 변환
                     RaycastInput rayInput = new RaycastInput {
                         Filter = new CollisionFilter {
@@ -52,7 +54,7 @@ namespace Game.Ecs.System
                             GroupIndex = 0
                         },
                         Start = start, // local 좌표 월드로 수정
-                        End = start + attackAspect.TransformDirection(ray.attackRayBuffer.rayEnd)             
+                        End = start + localTransform.ValueRO.TransformDirection(ray.attackRayBuffer.rayEnd)             
                     };
                     float damage = ray.attackRayBuffer.attackMagnification * attackAspect.GetAggressiveStrength();
 #if UNITY_EDITOR

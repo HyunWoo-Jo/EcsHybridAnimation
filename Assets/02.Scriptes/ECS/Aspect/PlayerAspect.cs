@@ -18,23 +18,12 @@ namespace Game.Ecs.Aspect
         private readonly RefRW<MoveProperties> _moveProperties;
 
      
-        public void SetStop(bool isValue) {
-            _navAgentProperties.ValueRW.isStop = isValue;
-            _moveProperties.ValueRW.isStop = isValue;
-        }
-
-        public void SetPathFinded(bool isValue) {
-            _navAgentProperties.ValueRW.isPathFinded = isValue;
-        }
-
         public bool IsContinueousAttack {
             get { return _animationProperties.ValueRO.isContinueousAttack; }
             set { _animationProperties.ValueRW.isContinueousAttack = value; }
         }
 
-        public void SetTargetPosition(float3 value) {
-            _rotationProperties.ValueRW.targetPosition = value;
-        }
+
 
     }
 }
