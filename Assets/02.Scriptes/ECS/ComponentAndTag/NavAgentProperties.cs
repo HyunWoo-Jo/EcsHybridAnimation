@@ -9,7 +9,7 @@ namespace Game.Ecs.ComponentAndTag
     /// <summary>
     /// NavAgent ÄÄÆ÷³ÍÆ®
     /// </summary>
-    public partial struct NavAgentProperties : IComponentData
+    public partial struct NavAgentProperties : IComponentData, IEnableableComponent
     {
         public Entity targetEntity;
         public bool isPathFinded;

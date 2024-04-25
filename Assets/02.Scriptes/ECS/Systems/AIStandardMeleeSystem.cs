@@ -17,7 +17,6 @@ namespace Game.Ecs.System
     {
         private int _attackHash;
         private ComponentLookup<LocalTransform> _localTransformLookup;
-        [BurstCompile]
         void OnCreate(ref SystemState state) {
             _attackHash = AnimationHash.Attack;
             _localTransformLookup = state.GetComponentLookup<LocalTransform>(true);
@@ -29,6 +28,10 @@ namespace Game.Ecs.System
         [BurstCompile]
         void OnUpdate(ref SystemState state) {
             _localTransformLookup.Update(ref state);
+            
+
+
+            // Attack
             foreach (var (ai_attackProperties, navAspect, attackAspect)in SystemAPI.Query<RefRW<AI_AttackRangeProperties>, NavAgentAspect, AttackAspect>()) {
                 Entity targetEntity = navAspect.GetTargetEntity();
                 if (_localTransformLookup.HasComponent(targetEntity)) {
