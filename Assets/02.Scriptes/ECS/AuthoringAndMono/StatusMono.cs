@@ -13,7 +13,8 @@ namespace Game.Ecs.AuthoringsAndMono
         public class StatusBaker : Baker<StatusMono> {
             public override void Bake(StatusMono authoring) {
                 Entity entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
-                AddComponent(entity, new StatusProperties{ 
+                AddComponent(entity, new StatusProperties{
+                    entity = entity,
                     maxHp = authoring._hp,
                     currentHp = authoring._hp,
                     aggressiveStrength = authoring._aggressiveStrength,

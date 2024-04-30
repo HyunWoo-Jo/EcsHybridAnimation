@@ -5,7 +5,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 namespace Game.Ecs.ComponentAndTag
 {
-    public partial struct MoveProperties : IComponentData
+    public partial struct MoveProperties : IComponentData, IEnableableComponent
     {
         public bool isStop;
         public float accelerateSpeed;

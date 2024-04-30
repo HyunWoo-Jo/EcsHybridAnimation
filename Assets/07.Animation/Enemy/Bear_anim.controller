@@ -8,7 +8,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Bear_Death
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -21,7 +21,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 5314583516329828454, guid: d4e01fbfd601a224e83e1bafb2b0a0b7, type: 3}
-  m_Tag: 
+  m_Tag: Die
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 

@@ -396,6 +396,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2100802617 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 420755981720162872, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+  m_PrefabInstance: {fileID: 3598963992675090799}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2100802630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100802617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608e1329eb20de94ca92152b1a9a363c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  freezeRotations:
+    x: 1
+    y: 0
+    z: 1
 --- !u!114 &30366354767299767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -782,6 +803,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8051226084899053674, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_GravityFactor
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8051226084899053674, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      propertyPath: m_LinearDamping
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8442157809915737272, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
       propertyPath: _attackTargetObject
       value: 
@@ -789,7 +818,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 420755981720162872, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2100802630}
   m_SourcePrefab: {fileID: 100100000, guid: 4f2f3c650fee2f843beb5ab3200c38ef, type: 3}
 --- !u!1 &3622872125539339900
 GameObject:
@@ -1654,12 +1686,20 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6793377016724573681, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: m_GravityFactor
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6793377016724573681, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
       propertyPath: m_LinearDamping
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6793377016724573681, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
       propertyPath: m_AngularDamping
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6793377016724573681, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
+      propertyPath: m_InitialLinearVelocity.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6926389966848828200, guid: 16d4e0404ec50eb46a59e4a3ebb86336, type: 3}
       propertyPath: m_LocalRotation.w
