@@ -9,11 +9,7 @@ using Game.Data;
 using Game.Ecs.Aspect;
 namespace Game.Ecs.System
 {   
-    /// <summary>
-    /// Hybrid Object와 Entity를 맵핑 
-    /// Animation Properties의 정보를 Hybrid Animator에 전달하는 역할
-    /// </summary>
-    public partial struct AnimationSystem : ISystem
+    public partial struct AnimationMaterialSystem : ISystem
     {
         void OnCreate(ref SystemState state) {
 
@@ -22,6 +18,8 @@ namespace Game.Ecs.System
 
         }
         void OnUpdate(ref SystemState state) {
+            //Hybrid Object와 Entity를 맵핑
+            // Animation Properties의 정보를 Hybrid Animator에 전달
             foreach (var (animRef, animPro, transform) in SystemAPI.Query<AnimationReference, RefRW<AnimationProperties>, RefRO<LocalTransform>>()) {
                 // Hybrid Object와 Entity Position Rotation 맵핑
                 animRef.transform.position = transform.ValueRO.Position;
@@ -58,6 +56,15 @@ namespace Game.Ecs.System
                 if (animPro.ValueRO.isTrigger) {
                     animPro.ValueRW.isTrigger = false;
                     animRef.animator.SetTrigger(animPro.ValueRO.triggerHash);
+                }
+            }
+            // Material 정보 전송
+            foreach(var (materialRef, floatBuffer) in SystemAPI.Query<MaterialReference, DynamicBuffer<FloatMaterialElement>>())
+            {
+                if (materialRef.material is null) continue;
+                foreach(var element in floatBuffer)
+                {
+                    materialRef.material.SetFloat(element.nameId, element.value);
                 }
             }
 

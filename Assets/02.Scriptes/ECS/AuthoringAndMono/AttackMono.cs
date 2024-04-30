@@ -8,7 +8,7 @@ using Game.Ecs.ComponentAndTag;
 namespace Game.Ecs.AuthoringsAndMono
 {
     [RequireComponent(typeof(StatusMono))]
-    [RequireComponent(typeof(AnimationMono))]
+    [RequireComponent(typeof(AnimationMaterialMono))]
     public class AttackMono : MonoBehaviour
     {
         [SerializeField] private List<RayDataList> _attackRayDataList;

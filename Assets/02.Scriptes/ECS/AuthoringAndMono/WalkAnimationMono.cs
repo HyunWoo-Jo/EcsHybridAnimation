@@ -5,7 +5,7 @@ using Unity.Entities;
 using Game.Ecs.ComponentAndTag;
 namespace Game.Ecs.AuthoringsAndMono
 {
-    [RequireComponent(typeof(AnimationMono))]
+    [RequireComponent(typeof(AnimationMaterialMono))]
     public class WalkAnimationMono : MonoBehaviour
     {
         

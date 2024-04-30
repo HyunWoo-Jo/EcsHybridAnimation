@@ -1564,7 +1564,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "7a43b15c912e44a6aa3f57deb65994b6",
     "m_Id": 0,
-    "m_DisplayName": "Destory_Alpha_0_4",
+    "m_DisplayName": "Destory_Alpha",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2634,10 +2634,10 @@
     "m_Guid": {
         "m_GuidSerialized": "9287b857-b9c7-4fbf-a665-8af9ead23c7c"
     },
-    "m_Name": "Destory_Alpha_0_4",
+    "m_Name": "Destory_Alpha",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Destory_Alpha_0_4",
-    "m_DefaultReferenceName": "_Destory_Alpha_0_4",
+    "m_RefNameGeneratedByDisplayName": "Destory_Alpha",
+    "m_DefaultReferenceName": "_Destory_Alpha",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -2645,13 +2645,13 @@
     "m_DismissedVersion": 0,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
+    "hlslDeclarationOverride": 3,
     "m_Hidden": false,
-    "m_Value": 0.800000011920929,
-    "m_FloatType": 0,
+    "m_Value": 0.0,
+    "m_FloatType": 1,
     "m_RangeValues": {
         "x": 0.0,
-        "y": 1.0
+        "y": 2.0
     }
 }
 

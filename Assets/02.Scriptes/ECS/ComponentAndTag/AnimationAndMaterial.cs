@@ -11,9 +11,13 @@ namespace Game.Ecs.ComponentAndTag
         public Entity animatorEntity;
     }
 
-    public class AnimationReference : ICleanupComponentData {
+    public class AnimationReference : ICleanupComponentData
+    {
         public Animator animator;
         public Transform transform;
+    }
+    public class MaterialReference : IComponentData {
+        public Material material;
     }
 
     public partial struct AnimationProperties : IComponentData {
@@ -28,5 +32,11 @@ namespace Game.Ecs.ComponentAndTag
         public bool isTrigger;
         public bool isMove;
         public bool preMove; // 트리거를 한번씩만 전달하기 위해 사용
+    }
+    
+    public partial struct  FloatMaterialElement : IBufferElementData
+    {
+        public int nameId;
+        public float value;
     }
 }

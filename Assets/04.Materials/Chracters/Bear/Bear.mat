@@ -76,6 +76,7 @@ Material:
     m_Floats:
     - _Ambient_Occlusion: 1
     - _ComputeMeshIndex: 0
+    - _Destory_Alpha: 0
     - _Destory_Alpha_0_4: 0
     - _QueueControl: 0
     - _QueueOffset: 0

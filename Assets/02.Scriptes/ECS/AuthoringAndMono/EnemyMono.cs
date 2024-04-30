@@ -7,7 +7,7 @@ namespace Game.Ecs.AuthoringsAndMono
 {
     [RequireComponent(typeof(AttackMono))]
     [RequireComponent(typeof(NavAgentMono))]
-    [RequireComponent(typeof(AnimationMono))]
+    [RequireComponent(typeof(AnimationMaterialMono))]
     [RequireComponent(typeof(StatusMono))]
     
     public class EnemyMono : MonoBehaviour
