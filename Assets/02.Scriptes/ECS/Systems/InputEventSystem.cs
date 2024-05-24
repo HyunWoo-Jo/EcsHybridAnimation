@@ -24,8 +24,9 @@ namespace Game.Ecs.System
 
         private Action _leftClick_listener;
         private Action _rightClick_listener;
-
+#pragma warning disable CS0414
         private bool _isLeftClick;
+#pragma warning restore CS0414
         private bool _isRightClick;
 
           [BurstCompile]
