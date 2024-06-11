@@ -18,12 +18,12 @@ namespace Game.Ecs.System
     {
         private NativeParallelHashMap<Int2MapDataKey, Entity> _objectSplitData_map;
         private NativeParallelHashSet<Int2MapDataKey> _newAreaBuffer_set;
-        private NativeList<Int2KeyEntity> _tempChangedEntity_list;
+        private NativeList<Int2KeyEntity> _changedEntity_list;
         [BurstCompile]
         void OnCreate(ref SystemState state) {
             _objectSplitData_map = new NativeParallelHashMap<Int2MapDataKey, Entity>(1000, Allocator.Persistent);
             _newAreaBuffer_set = new NativeParallelHashSet<Int2MapDataKey>(100, Allocator.Persistent);
-            _tempChangedEntity_list = new NativeList<Int2KeyEntity>(1000, Allocator.Persistent);
+            _changedEntity_list = new NativeList<Int2KeyEntity>(1000, Allocator.Persistent);
         }
         [BurstCompile]
         void OnDestroy(ref SystemState state) {
@@ -36,9 +36,8 @@ namespace Game.Ecs.System
             var ecb = ecbEnity.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
             // 오브젝트의 새로운 위치 확인, 데이터 변경
             new SplitReadJob {
-                ecb = ecb,
                 objetSplitData_read = _objectSplitData_map.AsReadOnly(),
-                tempEntity_writer = _tempChangedEntity_list.AsParallelWriter(),
+                changedEntity_writer = _changedEntity_list.AsParallelWriter(),
                 newBuffer_writer = _newAreaBuffer_set.AsParallelWriter(),
             }.ScheduleParallel(state.Dependency);
             state.CompleteDependency();
@@ -49,24 +48,25 @@ namespace Game.Ecs.System
 
         [BurstCompile]
         private partial struct SplitReadJob : IJobEntity {
-            public EntityCommandBuffer.ParallelWriter ecb;
+        
             public NativeParallelHashMap<Int2MapDataKey, Entity>.ReadOnly objetSplitData_read;
+            public NativeList<Int2KeyEntity>.ParallelWriter changedEntity_writer;
             public NativeParallelHashSet<Int2MapDataKey>.ParallelWriter newBuffer_writer;
-            public NativeList<Int2KeyEntity>.ParallelWriter tempEntity_writer;
+            
             [BurstCompile]
             public void Execute(RefRO<LocalTransform> localTr, RefRW<ObjectSplitProperties> splitProperties, Entity entity, [EntityIndexInQuery] int sortKey) {
                 Int2MapDataKey int2MapDataKey = new Int2MapDataKey();            
                 int2MapDataKey.ChangeValueFromPosition(localTr.ValueRO.Position);
                 // 새로운 위치의 경우
                 if (!objetSplitData_read.ContainsKey(int2MapDataKey)) {
-                    newBuffer_writer.Add(int2MapDataKey);
+                    newBuffer_writer.Add(int2MapDataKey); // 새로 생성 버퍼에 추가
                 }
                 // 위치가 변경 되었을 경우
                 if(splitProperties.ValueRO.currentKey != int2MapDataKey) {
                     splitProperties.ValueRW.preKey = splitProperties.ValueRO.currentKey;
                     splitProperties.ValueRW.currentKey = int2MapDataKey;
                     Int2KeyEntity intkeyEntity = new Int2KeyEntity { entity = entity, key = int2MapDataKey };
-                    tempEntity_writer.AddNoResize(intkeyEntity);
+                    changedEntity_writer.AddNoResize(intkeyEntity); // 변경 버퍼에 추가
 
                 }
                 
@@ -75,10 +75,13 @@ namespace Game.Ecs.System
 
         [BurstCompile]
         private struct DeleteAddKeyJob : IJobParallelFor {
-            public NativeList<Int2KeyEntity> int2KeyEntities;
+            public EntityCommandBuffer.ParallelWriter ecb;
+            public NativeList<Int2KeyEntity> changedEntity_list;
+            public NativeParallelHashMap<Int2MapDataKey, Entity>.ReadOnly objetSplitData_read;
 
             public void Execute(int index) {
-
+                Int2MapDataKey key = changedEntity_list[index].key;
+                //delete pre
             }
 
         }
