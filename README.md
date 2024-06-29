@@ -1,7 +1,12 @@
-# HAS_Project
+# Ecs
 
 ## [CI/CD](/Doc/CICD.md)
-
+---
+# 관련내용
+- Hybrid Animation
+- Battle Logic
+- Ecs FSM AI
+- Ecs NavAgent
 
 ## Assets
 
