@@ -1,9 +1,35 @@
 ## ECS NavAgent
 ---
 #### Ecs NavAgent 처리 과정
+<img width="496" alt="image" src="https://github.com/HyunWoo-Jo/UnityEcs_practice2/assets/73084993/7f5c3c33-a6cd-4e3a-b0fb-7177b3c27336">
+
+***
+#### NavMesh를 다른 World에서 사용할 수 있도록 처리
+```csharp
+// NavMeshAdder.cs
+
+[SerializeField] private List<NavMeshData> _navMeshDataList = new();
+private List<NavMeshDataInstance> _navMeshDataInsList = new();
+
+void Awake()
+{
+    foreach(var navData in _navMeshDataList) {
+        var navIns = NavMesh.AddNavMeshData(navData);
+        _navMeshDataInsList.Add(navIns);
+    }
+}
+private void OnDisable() {
+    foreach(var navIns in _navMeshDataInsList) {
+        navIns.Remove();
+    }
+}
+```
+
 ***
 #### Components
 ```csharp
+// NavAgentProperties.cs
+
 public partial struct NavAgentProperties : IComponentData, IEnableableComponent
 {
     public Entity targetEntity;
@@ -17,8 +43,11 @@ public partial struct WaypointBuffer : IBufferElementData {
     public float3 waypoint;
 }
 ```
+***
 #### NavAgent System
 ```csharp
+// NavAgentSystem.cs
+
 [BurstCompile]
 public partial struct NavAgentSystem : ISystem {
 
