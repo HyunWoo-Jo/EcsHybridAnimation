@@ -2,7 +2,7 @@
 
 ## [CI/CD](/Doc/CICD.md)
 ---
-# 관련내용
+# 내용
 - [Hybrid Animation](/Doc/HybridAnimation.md)
 - [Battle Logic](/Doc/BattleLogic.md)
 - [Ecs FSM AI](/Doc/FSMAI.md)
