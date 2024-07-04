@@ -5,7 +5,6 @@
 # 내용
 - [Hybrid Animation](/Doc/HybridAnimation.md)
 - [Battle Logic](/Doc/BattleLogic.md)
-- [Ecs FSM AI](/Doc/FSMAI.md)
 - [Ecs NavAgent](/Doc/NavAgent.md)
 
 ## Assets
