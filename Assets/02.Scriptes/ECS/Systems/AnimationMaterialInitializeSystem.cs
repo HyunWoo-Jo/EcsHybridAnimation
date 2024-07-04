@@ -12,7 +12,7 @@ using Game.Mono;
 namespace Game.Ecs.System
 {
     [UpdateInGroup(typeof(InitializationSystemGroup), OrderFirst = true)]
-    public partial struct AnimationInitializeSystem : ISystem
+    public partial struct AnimationMaterialInitializeSystem : ISystem
     {
         void OnCreate(ref SystemState state) { 
         }
@@ -20,16 +20,22 @@ namespace Game.Ecs.System
         void OnDestroy(ref SystemState state) {
 
         }
+        
         void OnUpdate(ref SystemState state) {
             var ecb = new EntityCommandBuffer(Unity.Collections.Allocator.Temp, PlaybackPolicy.SinglePlayback);
 
-            foreach (var (animRef, entity) in SystemAPI.Query<AnimGameObjectReference>().WithNone<AnimationReference>().WithEntityAccess()) {
+            foreach (var (animRef, materialRef,  entity) in SystemAPI.Query<AnimGameObjectReference, MaterialReference>().WithNone<AnimationReference>().WithEntityAccess()) {
                 // 생성
-                GameObject obj = HybridObjectManager.Instance.InstantiateObject(animRef.prefab);          
+                GameObject obj = HybridObjectManager.Instance.InstantiateObject(animRef.prefab);
                 ecb.AddComponent(entity, new AnimationReference {
                     animator = obj.GetComponent<Animator>(),
                     transform = obj.GetComponent<Transform>()
                 });
+                var skinds = obj.GetComponentsInChildren<SkinnedMeshRenderer>();
+                if(skinds.Length > 0)
+                {
+                    materialRef.material = skinds[0].material;
+                }
                 // 삭제
                 ecb.RemoveComponent<AnimGameObjectReference>(entity);
                 DestroyChild(ref state, ref ecb, animRef.animatorEntity);

@@ -20,20 +20,13 @@ namespace Game.Ecs.System
         }
         [BurstCompile]
         void OnUpdate(ref SystemState state) {
-            new PlayerJob { }.ScheduleParallel();
-        }
-
-        [BurstCompile]
-        private partial struct PlayerJob : IJobEntity {
-            [BurstCompile]
-            private void Execute(PlayerAspect playerAspect) {
-                if (playerAspect.GetIsStop()) {
-                    playerAspect.Walk(false);
-                } else {
-                    playerAspect.Walk(true);
-                }
-
-                
+            foreach(var (navAspect, animPro) in SystemAPI.Query<NavAgentAspect, RefRW<AnimationProperties>>().WithAll<PlayerTag>()) {
+                // ¿Ãµø animation 
+                //if (navAspect.GetIsStop()) {
+                //    animPro.ValueRW.isMove = false;
+                //} else {
+                //    animPro.ValueRW.isMove = true;
+                //}
             }
         }
     }

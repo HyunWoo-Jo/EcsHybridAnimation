@@ -25,9 +25,10 @@ namespace Game.Ecs.System
             }.ScheduleParallel();
 
         }
-
+        [BurstCompile]
         private partial struct RotationJob : IJobEntity {
             public float deltaTime;
+            [BurstCompile]
             private void Execute(RotationAspect turnAspect) {
                 if (turnAspect.IsStop) return;
                 float3 direction = turnAspect.TargetPosition - turnAspect.Position;

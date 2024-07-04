@@ -8,37 +8,22 @@ namespace Game.Ecs.Aspect
 {
     public readonly partial struct PlayerAspect : IAspect
     {
+#pragma warning disable CS0414 // warning Á¦°Å
         private readonly RefRO<PlayerTag> _playerTag;
-        private readonly RefRW<NavAgentProperties> _navAgentPropert;
+#pragma warning restore
+        private readonly RefRW<NavAgentProperties> _navAgentProperties;
         private readonly RefRW<AnimationProperties> _animationProperties;
         private readonly RefRW<RotationProperties> _rotationProperties;
         private readonly RefRW<StatusProperties> _statusProperties;
+        private readonly RefRW<MoveProperties> _moveProperties;
 
-        public bool GetIsStop() {
-            return _navAgentPropert.ValueRO.isStop || !_navAgentPropert.ValueRO.isPathFinded;
-
-        }
-
-        public void Walk(bool isWalk) {
-            _animationProperties.ValueRW.isMove = isWalk;
-        }
-
-        public void SetStop(bool isValue) {
-            _navAgentPropert.ValueRW.isStop = isValue;
-        }
-
-        public void SetPathFinded(bool isValue) {
-            _navAgentPropert.ValueRW.isPathFinded = isValue;
-        }
-
+     
         public bool IsContinueousAttack {
             get { return _animationProperties.ValueRO.isContinueousAttack; }
             set { _animationProperties.ValueRW.isContinueousAttack = value; }
         }
 
-        public void SetTargetPosition(float3 value) {
-            _rotationProperties.ValueRW.targetPosition = value;
-        }
+
 
     }
 }

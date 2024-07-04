@@ -11,14 +11,23 @@ using Unity.Collections;
 namespace Game.Ecs.ComponentAndTag
 {
 
+
+    public partial struct AttackProperties : IComponentData {
+        public bool isAttackAble;
+    }
     public partial struct AttackRayElement : IBufferElementData {
         public RayData attackRayBuffer;
     }
 
     public partial struct AttackRayBlobReference : IComponentData{
-        public BlobAssetReference<RayBlob> blobRef;
+        public BlobAssetReference<RayBlob> attackBlobRef;
+        public BlobAssetReference<IntBlob> startIndexBlobRef;
+        public BlobAssetReference<IntBlob> endIndexBlobRef;
     }
     public struct RayBlob {
-        public BlobArray<BlobAssetReference<BlobArray<RayData>>> attackBlobTwoArray;
+        public BlobArray<RayData> attackBlob;
+    }
+    public struct IntBlob {
+        public BlobArray<int> intBlob;
     }
 }

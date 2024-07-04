@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Game.Utils;
+using UnityEngine.SceneManagement;
+using Game.DesignPattern;
 
 namespace Game.Mono
 {

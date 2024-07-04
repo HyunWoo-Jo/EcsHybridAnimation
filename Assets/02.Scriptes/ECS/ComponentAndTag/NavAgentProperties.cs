@@ -9,20 +9,16 @@ namespace Game.Ecs.ComponentAndTag
     /// <summary>
     /// NavAgent ÄÄÆ÷³ÍÆ®
     /// </summary>
-    public struct NavAgentProperties : IComponentData, IEnableableComponent
+    public partial struct NavAgentProperties : IComponentData, IEnableableComponent
     {
-        public Entity entity;
         public Entity targetEntity;
         public bool isPathFinded;
         public bool isStop;
         public int curretWaypoint;
-        public float moveSpeed;
-        public float pivotHight;
         public float traceRange;
     }
 
-
-    public struct WaypointBuffer : IBufferElementData {
+    public partial struct WaypointBuffer : IBufferElementData {
         public float3 waypoint;
     }
 }

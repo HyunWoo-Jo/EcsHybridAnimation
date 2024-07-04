@@ -14,6 +14,7 @@ namespace Game.Ecs.AuthoringsAndMono
                 Entity entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
                 AddComponent(entity, new InputEventProperties {
                     clickMovePointEntity = GetEntity(authoring._clickMovePoint, TransformUsageFlags.Dynamic)
+
                 });
             }
         }

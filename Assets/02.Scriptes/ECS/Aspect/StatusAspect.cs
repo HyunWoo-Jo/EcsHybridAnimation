@@ -11,8 +11,8 @@ namespace Game.Ecs.Aspect
         private readonly DynamicBuffer<HpCalculatorElement> _hpCalculatorBuffer;
 
         public float Hp {
-            get { return _statusProperties.ValueRO.hp; }
-            set { _statusProperties.ValueRW.hp = value; }
+            get { return _statusProperties.ValueRO.currentHp; }
+            set { _statusProperties.ValueRW.currentHp = value; }
         }
 
         public DynamicBuffer<HpCalculatorElement> GetDynamicBuffer() {

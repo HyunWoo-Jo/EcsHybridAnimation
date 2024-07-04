@@ -22,8 +22,9 @@ namespace Game.Ecs.System
         void OnUpdate(ref SystemState state) {
             new CalculateHpJob().ScheduleParallel();
         }
-
+        [BurstCompile]
         private partial struct CalculateHpJob : IJobEntity {
+            [BurstCompile]
             private void Execute(StatusAspect statusAspect) {
                 foreach(var item in statusAspect.GetDynamicBuffer()) {
                     statusAspect.Hp += item.value;

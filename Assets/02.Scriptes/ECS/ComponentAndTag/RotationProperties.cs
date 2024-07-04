@@ -5,7 +5,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 namespace Game.Ecs.ComponentAndTag
 {
-    public partial struct RotationProperties : IComponentData
+    public partial struct RotationProperties : IComponentData, IEnableableComponent
     {
         public bool isStop;
         public float3 targetPosition;

@@ -8,10 +8,10 @@ using Game.Ecs.ComponentAndTag;
 namespace Game.Ecs.AuthoringsAndMono
 {
     [RequireComponent(typeof(RotationMono))]
+    [RequireComponent(typeof(MoveMono))]
     public class NavAgentMono : MonoBehaviour
     {
         [SerializeField] private Transform _targetTransform;
-        [SerializeField] private float _moveSpeed;
         [SerializeField] private float _traceRange;
 #if UNITY_EDITOR
         private void Awake() {
@@ -23,7 +23,6 @@ namespace Game.Ecs.AuthoringsAndMono
                 Entity entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
                 Entity targetEntity = GetEntity(authoring._targetTransform, TransformUsageFlags.Dynamic);
                 AddComponent(entity, new NavAgentProperties {
-                    moveSpeed = authoring._moveSpeed,
                     targetEntity = targetEntity,
                     traceRange = authoring._traceRange
                 });

@@ -6,7 +6,9 @@ namespace Game.Ecs.ComponentAndTag
 {
     public partial struct StatusProperties : IComponentData
     {
-        public float hp;
+        public Entity entity;
+        public float maxHp;
+        public float currentHp;
         public float aggressiveStrength;
         public float defensivePower;
     }
