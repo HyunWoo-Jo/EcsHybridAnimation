@@ -35,11 +35,11 @@ namespace Game.Ecs.System
             var ecbEnity = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbEnity.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
             // 오브젝트의 새로운 위치 확인, 데이터 변경
-            new SplitReadJob {
-                objetSplitData_read = _objectSplitData_map.AsReadOnly(),
-                changedEntity_writer = _changedEntity_list.AsParallelWriter(),
-                newBuffer_writer = _newAreaBuffer_set.AsParallelWriter(),
-            }.ScheduleParallel(state.Dependency);
+            //new SplitReadJob {
+            //    objetSplitData_read = _objectSplitData_map.AsReadOnly(),
+            //    changedEntity_writer = _changedEntity_list.AsParallelWriter(),
+            //    newBuffer_writer = _newAreaBuffer_set.AsParallelWriter(),
+            //}.ScheduleParallel(state.Dependency);
             state.CompleteDependency();
             // 기존 위치 Entity 삭제
 
