@@ -20,12 +20,12 @@ namespace Game.Ecs.System
         [BurstCompile]
         void OnUpdate(ref SystemState state) {
             var ecb = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
-            foreach (var (AI_attackPro, entity) in SystemAPI.Query<AI_AttackRangeProperties>().WithEntityAccess().WithAll<NewAITag>()) {
-                ecb.SetComponentEnabled<RotationProperties>(entity, false);
-                ecb.SetComponentEnabled<NavAgentProperties>(entity, false);
-                ecb.SetComponentEnabled<AI_AttackRangeProperties>(entity, false);
-                ecb.RemoveComponent<NewAITag>(entity);
-            }
+            //foreach (var (AI_attackPro, entity) in SystemAPI.Query<AI_AttackRangeProperties>().WithEntityAccess().WithAll<NewAITag>()) {
+            //    ecb.SetComponentEnabled<RotationProperties>(entity, false);
+            //    ecb.SetComponentEnabled<NavAgentProperties>(entity, false);
+            //    ecb.SetComponentEnabled<AI_AttackRangeProperties>(entity, false);
+            //    ecb.RemoveComponent<NewAITag>(entity);
+            //}
             ecb.Playback(state.EntityManager);
         }
     }
